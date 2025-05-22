@@ -1,17 +1,14 @@
-import React, {useEffect} from 'react'
-import Aos from 'aos';
-import 'aos/dist/aos.css';
+import React from 'react'
 
 import HeroSection from '../Component/HeroSection'
 import AboutSection from '../Component/AboutSection'
 import FeatureSection from "../Component/FeatureSection";
 import CallToAction from "../Component/CallToAction";
 import ServicesSection from '../Component/ServicesSection'
+import FaqSection from '../Component/FaqSection';
+import ContactSection from '../Component/ContactSection';
 
 const Home = () => {
-  useEffect(() => {
-    Aos.init({ duration: 1000 }); // optional config
-  }, []);
   return (
     <main className="main">
       <HeroSection />
@@ -19,6 +16,8 @@ const Home = () => {
       <FeatureSection />
       <CallToAction />
       <ServicesSection />
+      <FaqSection />
+      <ContactSection />
     </main>
   )
 }
