@@ -15,7 +15,6 @@ const Mainpage = () => {
         <Route path={"/about"} element={<About />} />
         <Route path={"/services"} element={<ServicesSection />} />
       </Routes>
-      <Home />
       <Footer />
     </>
   )
