@@ -1,7 +1,43 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 const Header = () => {
+
+    const mobileNavToogle = () =>{
+      const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
+
+      document.querySelector('body').classList.toggle('mobile-nav-active');
+      mobileNavToggleBtn.classList.toggle('bi-list');
+      mobileNavToggleBtn.classList.toggle('bi-x');
+
+    }
+
+
+    document.querySelectorAll('#navmenu a').forEach(navmenu => {
+      // const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
+
+        navmenu.addEventListener('click', () => {
+          if (document.querySelector('.mobile-nav-active')) {
+           
+            mobileNavToogle()
+            // document.querySelector('body').classList.toggle('mobile-nav-active');
+            // mobileNavToggleBtn.classList.toggle('bi-list');
+            // mobileNavToggleBtn.classList.toggle('bi-x');
+          }
+        });
+    
+      });
+
+
+    // document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
+    //   navmenu.addEventListener('click', function(e) {
+    //     e.preventDefault();
+    //     this.parentNode.classList.toggle('active');
+    //     this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
+    //     e.stopImmediatePropagation();
+    //   });
+    // });
+
   return (
     <>
       <header id="header" className="header d-flex align-items-center fixed-top">
@@ -14,15 +50,16 @@ const Header = () => {
 
           <nav id="navmenu" className="navmenu">
             <ul>
-              <li><Link to={"/"} className="active">Home</Link></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#services">Services</a></li>
+              <li><NavLink to={"/"} >Home</NavLink></li>
+              {/* <li><Link to={"#about"} >About</Link></li> */}
+              <li><NavLink to={"/about"}>About</NavLink></li>
+              <li><NavLink to={"/services"}>Services</NavLink></li>
               <li><a href="#portfolio">Portfolio</a></li>
               <li><a href="#team">Team</a></li>
               <li><a href="#blog">Blog</a></li>
               <li><a href="#contact">Contact</a></li>
             </ul>
-            <i className="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            <i className="mobile-nav-toggle d-xl-none bi bi-list" onClick={mobileNavToogle}></i>
           </nav>
 
         </div>
