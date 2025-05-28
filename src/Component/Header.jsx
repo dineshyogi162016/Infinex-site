@@ -54,10 +54,10 @@ const Header = () => {
               {/* <li><Link to={"#about"} >About</Link></li> */}
               <li><NavLink to={"/about"}>About</NavLink></li>
               <li><NavLink to={"/services"}>Services</NavLink></li>
-              <li><a href="#portfolio">Portfolio</a></li>
-              <li><a href="#team">Team</a></li>
-              <li><a href="#blog">Blog</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li><NavLink to={"/portfolio"}>Portfolio</NavLink></li>
+              <li><NavLink to={"/team"}>Team</NavLink></li>
+              <li><NavLink to={"/blog"}>Blog</NavLink></li>
+              <li><NavLink to={"/contact"}>Contact</NavLink></li>
             </ul>
             <i className="mobile-nav-toggle d-xl-none bi bi-list" onClick={mobileNavToogle}></i>
           </nav>

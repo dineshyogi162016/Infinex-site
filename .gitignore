@@ -4,6 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
+/admin-main.css
+/Dashboard.jsx
 
 # testing
 /coverage
