@@ -1,0 +1,98 @@
+body {
+    /* min-height: 100vh; */
+    display: flex;
+    flex-direction: column;
+    
+    margin: 0;
+    /* overflow: hidden; */
+}
+
+.admin-dashboard {
+    overflow: hidden;
+    height: 100vh;
+}
+.admin-container {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 240px;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    padding: 1rem;
+}
+
+.content-area {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+/* Navbar  */
+#admin-navbar{
+    position: sticky;
+    top: 0;
+    background-color: #5858f3 !important;
+    /* color: #fff !important; */
+}
+.admin-Mobile-nav{
+    display: none;
+}
+.admin-nav-logo img{
+    width: 145px;
+    margin-left: 10px;
+    cursor: pointer;
+    color: #fff !important;
+}
+
+#admin-navbar .profile-name img {
+    width: 32px;
+    border-radius: 30px;
+}
+/* Navbar Ending */
+
+
+
+/* Sidebar  */
+#admin-sidebar{
+    overflow: hidden;
+    background-color: #5858f3;
+    color: #fff !important;
+}
+
+.admin-dashboard li.nav-item {
+    box-shadow: 1px 1px 10px 0px #fff;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    outline: none;
+    border:none;
+    transition: all 0.5s ease-in;
+}
+
+.admin-dashboard li.nav-item :hover {
+    color: #5858f3;
+    background-color: #fff;
+    border-radius: 10px;
+    transition: all 0.5s ease-in;
+}
+
+.admin-dashboard .nav-link {
+    color: #fff;
+    font-weight: bold;
+    outline: none;
+}
+/* Sidebar Ending  */
+
+
+/* Content Area */
+#admin-content-area{
+    /* min-height: 700px; */
+    height: 100vh;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+
+/* Ending Content Area */

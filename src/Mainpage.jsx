@@ -13,7 +13,7 @@ import Contact from './Pages/Contact';
 import Portfolio from './Pages/Portfolio'
 import Team from './Pages/Team';
 import Blog from './Pages/Blog';
-// import Dashboard from './Pages/Dashboard';
+import Dashboard from './Pages/Dashboard';
 
 const Mainpage = () => {
   useEffect(() => {
@@ -21,7 +21,7 @@ const Mainpage = () => {
     }, []);
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <Routes>
         <Route path={"/"} element={<Home />} />
         <Route path={"/about"} element={<About />} />
@@ -32,12 +32,12 @@ const Mainpage = () => {
         <Route path={"/contact"} element={<Contact />} />
 
 
-        {/* <Route path={"/dashboard"} element={<Dashboard />} /> */}
+        <Route path={"/dashboard"} element={<Dashboard />} />
 
 
         <Route path={"/*"} element={<PageNotFound />} />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }

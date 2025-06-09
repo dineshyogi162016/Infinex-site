@@ -1,0 +1,19 @@
+@media (max-width: 991px) {
+    #admin-navbar {
+        max-height: 350px;
+        overflow-y: auto;
+    }
+    .admin-Mobile-nav{
+        display: flex;
+    }
+    .admin-dashboard ul{
+        display: block;
+        margin-top: 20px;
+    }
+    
+    
+    #admin-sidebar{
+        display: none;
+    }
+
+}
