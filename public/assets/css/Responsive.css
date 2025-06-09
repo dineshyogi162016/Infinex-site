@@ -1,14 +1,54 @@
 @media (max-width: 991px) {
-    #admin-navbar {
-        max-height: 350px;
-        overflow-y: auto;
+
+    .admin-dashboard {
+        padding: 0 0 0 0 !important;   
     }
-    .admin-Mobile-nav{
+
+    #admin-content-area{
+        padding: 10px !important;
+    }
+    #admin-content-area .content-area {
+        padding: 10px !important;
+    }
+    #admin-navbar {
+        display: none;
+    }
+    #admin-Mobile-nav{
+        display: flex !important;
+    }
+
+    .admin-nav-logo img {
+        width: 110px !important;
+        margin-left: 0px !important; 
+    }
+
+    #admin-Mobile-nav #basic-navbar-nav{
+        width: 100%;
+        position: absolute;
+        background: #fff;
+        top: 65px;
+        left: 0;
+        max-height: 300px;
+        overflow-y: auto;
+        z-index: 99;
+        box-shadow: 1px 1px 18px -15px;
+        padding: 10px 6px;
+    }
+
+    #admin-Mobile-nav .mobile-left-nav .dropdown{
+        margin-right: 20px;
+        align-items: center;
         display: flex;
     }
+
+    #admin-Mobile-nav .mobile-left-nav button.navbar-toggler{
+        border: none;
+        outline: none;
+        padding: 0;
+    }
+
     .admin-dashboard ul{
         display: block;
-        margin-top: 20px;
     }
     
     
