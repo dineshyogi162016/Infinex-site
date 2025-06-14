@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const CallToAction = () => {
   return (
@@ -12,7 +13,7 @@ const CallToAction = () => {
             <p>Have a question or want to work together? Reach out to us!</p>
           </div>
           <div className="col-xl-3 cta-btn-container text-center">
-            <a className="cta-btn align-middle" href="#">Call To Action</a>
+            <Link to={"/"} className="cta-btn align-middle" >Call To Action</Link>
           </div>
         </div>
 

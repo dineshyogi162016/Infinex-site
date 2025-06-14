@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const FeatureSection = () => {
   return (
@@ -8,28 +9,28 @@ const FeatureSection = () => {
 
       <ul className="nav nav-tabs row  d-flex" data-aos="fade-up" data-aos-delay="100">
         <li className="nav-item col-3">
-          <a className="nav-link active show" data-bs-toggle="tab" data-bs-target="#features-tab-1">
+          <Link to={"/"} className="nav-link active show" data-bs-toggle="tab" data-bs-target="#features-tab-1">
             <i className="bi bi-binoculars"></i>
             <h4 className="d-none d-lg-block">Excellence in Delivery</h4>
-          </a>
+          </Link>
         </li>
         <li className="nav-item col-3">
-          <a className="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-2">
+          <Link to={"/"} className="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-2">
             <i className="bi bi-box-seam"></i>
             <h4 className="d-none d-lg-block">Innovation-First Approach</h4>
-          </a>
+          </Link>
         </li>
         <li className="nav-item col-3">
-          <a className="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-3">
+          <Link to={"/"} className="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-3">
             <i className="bi bi-brightness-high"></i>
             <h4 className="d-none d-lg-block">Client Partnership</h4>
-          </a>
+          </Link>
         </li>
         <li className="nav-item col-3">
-          <a className="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-4">
+          <Link to={"/"} className="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-4">
             <i className="bi bi-command"></i>
             <h4 className="d-none d-lg-block">Security &amp; Reliability</h4>
-          </a>
+          </Link>
         </li>
       </ul>
 

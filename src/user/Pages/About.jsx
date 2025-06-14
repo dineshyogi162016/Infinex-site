@@ -10,7 +10,7 @@ const About = () => {
           <p>Esse dolorum voluptatum ullam est sint nemo et est ipsa porro placeat quibusdam quia assumenda numquam molestias.</p>
           {/* <nav class="breadcrumbs">
             <ol>
-              <li><a href="#index.html">Home</a></li>
+              <li><Link to={"#index.html"}>Home</Link></li>
               <li class="current">Blog</li>
             </ol>
           </nav> */}

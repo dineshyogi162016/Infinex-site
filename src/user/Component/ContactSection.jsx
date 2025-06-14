@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 
 const ContactSection = () => {
     const [formData, setformData] = useState({
@@ -82,31 +83,31 @@ const ContactSection = () => {
                 <div className="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
                     <i className="bi bi-geo-alt flex-shrink-0"></i>
                     <div>
-                        <a href="https://g.co/kgs/wL2LUqV" style={{textDecoration : "none", color: "black"}}>
+                        <Link to={"/"} href="https://g.co/kgs/wL2LUqV" style={{textDecoration : "none", color: "black"}}>
                             <h3>Address</h3>
                             <p> Infinex Technologies Pvt. Ltd | Jaipur
         https://g.co/kgs/wL2LUqV </p>
-                        </a>
+                        </Link>
                     </div>
                 </div>
 
                 <div className="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
                         <i className="bi bi-telephone flex-shrink-0"></i>
                         <div>
-                            <a href="tel:+911234567890" style={{textDecoration : "none", color: "black"}}>
+                            <Link to={"tel:+911234567890"} style={{textDecoration : "none", color: "black"}}>
                                 <h3>Call Us</h3>
                                 <p>+918955100493</p>
-                            </a>
+                            </Link>
                         </div>
                 </div>
 
                 <div className="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
                     <i className="bi bi-envelope flex-shrink-0"></i>
                     <div>
-                        <a href="mailto:info@infinextechnologies.com" style={{textDecoration : "none", color: "black"}}>
+                        <aLink to={"mailto:info@infinextechnologies.com"} style={{textDecoration : "none", color: "black"}}>
                             <h3>Email Us</h3>
                             <p>info@infinextechnologies.com</p>
-                        </a>
+                        </aLink>
                     </div>
                 </div>
 

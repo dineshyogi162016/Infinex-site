@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const AboutSection = () => {
   return (
@@ -26,7 +27,7 @@ const AboutSection = () => {
 
           <div className="col-lg-6" data-aos="fade-up" data-aos-delay="200">
             <p>Founded in 2025, Infinex has grown from a small tech startup to a leading technology consultancy serving clients across industries. Our mission is to help businesses harness the power of technology to achieve their strategic goals and stay ahead in today's rapidly evolving digital landscape. </p>
-            <a href="#" className="read-more"><span>Read More</span><i className="bi bi-arrow-right"></i></a>
+            <Link to={"#"} className="read-more"><span>Read More</span><i className="bi bi-arrow-right"></i></Link>
           </div>
 
         </div>

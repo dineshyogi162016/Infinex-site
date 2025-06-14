@@ -48,6 +48,33 @@
     <!-- Main CSS File -->
     <link href="./assets/css/main.css" rel="stylesheet">
     <link href="./assets/css/Responsive.css" rel="stylesheet">
+    <link href="./assets/css/elementDesign.css" rel="stylesheet">
+
+
+    <!-- for Select image library  -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+  
+    <script>
+      $(document).ready(function () {
+        function formatOption(option) {
+          var data = $(option.element).data();
+          var text = $(option.element).text();
+          if (data && data['imgSrc']) {
+            var imgSrc = data['imgSrc'];
+            return $('<span><img src="' + imgSrc + '" style="width:20px;height:20px;" /> ' + text + '</span>');
+          }
+          return text;
+        }
+
+        $('#ImageExample').select2({
+          templateResult: formatOption,
+          templateSelection: formatOption
+        });
+      });
+    </script>
+    <!-- for Select image library  -->
 
 
   </head>

@@ -1,4 +1,8 @@
 @media (max-width: 991px) {
+    /* For Webkit browsers */
+    ::-webkit-scrollbar {
+        width: 4px !important;
+    }
 
     .admin-dashboard {
         padding: 0 0 0 0 !important;   
@@ -26,7 +30,7 @@
         width: 100%;
         position: absolute;
         background: #fff;
-        top: 65px;
+        top: 55px;
         left: 0;
         max-height: 300px;
         overflow-y: auto;
