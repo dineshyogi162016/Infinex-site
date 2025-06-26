@@ -61,3 +61,10 @@
     }
 
 }
+
+@media (max-width: 767px) {
+    .admin-social-card{
+        width: 100%;
+        max-width: 100% !important;
+    }
+}

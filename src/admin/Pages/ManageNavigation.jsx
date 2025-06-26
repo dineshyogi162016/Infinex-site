@@ -2,30 +2,50 @@ import React, { useEffect, useState } from 'react'
 import * as MdIcons from 'react-icons/md';
 import * as FaIcons from 'react-icons/fa';
 import * as IoIcons from 'react-icons/io';
-import AdminNavigation from '../../LocalAssets/SampleData'
+import * as TbIcons from 'react-icons/tb';
+import * as RiIcons from 'react-icons/ri';
+import {AdminNavigation} from '../../LocalAssets/SampleData'
 
 const ManageNavigation = () => {
 
-    const allIcons = { ...MdIcons, ...FaIcons, ...IoIcons };
+    const allIcons = { ...MdIcons, ...FaIcons, ...IoIcons, ...TbIcons, ...RiIcons };
     let NavIcon
     const [NavItem, setNavItem] = useState ({
         icon : "",
         itemName : "",
         itemLink : "",
-        show : "off",
+        show : false
     })
 
     const [NavigationData, setNavigationData] = useState([])
+    const [buttonType, setbuttonType] = useState("ADD+")
 
 
     const handleChangeNav = (e)=>{
         setNavItem({...NavItem, [e.target.name] : e.target.value})
     }
+    const handleCheckBox = (e) => {
+        setNavItem({...NavItem, [e.target.name]: !(NavItem.show)})
+    }
 
-    const handleAddNavItem = () => {
-        const preNav = [...NavigationData, NavItem]
+    const handleShowData = (i) => {
+        const updateTableData = [...NavigationData]
 
-        setNavigationData(preNav)
+        updateTableData[i].show = !updateTableData[i].show;
+        setNavigationData(updateTableData)
+    }
+
+    const handleAddNavItem = (e) => {
+        e.preventDefault()
+        if(buttonType === "UPDATE"){
+            // NavigationData[] = NavItem ;
+
+            setbuttonType("ADD+")
+        }else{
+            const preNav = [...NavigationData, NavItem]
+    
+            setNavigationData(preNav)
+        }
 
         setNavItem({
             icon : "",
@@ -37,10 +57,14 @@ const ManageNavigation = () => {
 
     const handleNavDelete = (i) => {
         const newList = [...NavigationData];
-        const aaa = newList.splice(i,1)
+        newList.splice(i,1)
         setNavigationData(newList)
     }
-    console.log("NavigationData", NavigationData)
+    const handleNavEdit = (e, i) => {
+        setNavItem(e)
+        setbuttonType("UPDATE")
+    }    
+
     useEffect(()=>{
         setNavigationData(AdminNavigation)
     }, [])
@@ -51,25 +75,28 @@ const ManageNavigation = () => {
                 <div className="heading-area " style={{paddingRight: "20px", borderRight: "4px solid #f0f5f9"}} >
                     <h4>Add Nav Item</h4>
                 </div>
-                <div className="row gy-2 gx-3 align-items-center">
+                <form onSubmit={handleAddNavItem} className="row gy-2 gx-3 align-items-center" >
                     <div className="col-auto">
                         {/* <label className="visually-hidden" htmlFor="autoSizingInput">Name</label> */}
-                        <input onChange={handleChangeNav} value={NavItem.itemName} name='itemName' type="text" className="form-control" id="" placeholder="NavItem Name" />
+                        <input required onChange={handleChangeNav} value={NavItem.itemName} name='itemName' type="text" className="form-control" id="" placeholder="NavItem Name" />
                     </div>
                     <div className="col-auto">
                         {/* <label className="visually-hidden" htmlFor="autoSizingInputGroup">Username</label> */}
                         <div className="input-group">
                             {/* <div className="input-group-text">@</div> */}
-                            <input onChange={handleChangeNav} value={NavItem.itemLink} name='itemLink' type="text" className="form-control" id="" placeholder="NavItem Link" />
+                            <input required onChange={handleChangeNav} value={NavItem.itemLink} name='itemLink' type="text" className="form-control" id="" placeholder="NavItem Link" />
                         </div>
                     </div>
                     <div className="col-auto">
-                        <label className="visually-hidden" htmlFor="autoSizingSelect">Preference</label>
-                        <select onChange={handleChangeNav} value={NavItem.icon} name='icon' className="form-select" >
+                        {/* <label className="visually-hidden" htmlFor="autoSizingSelect">Preference</label> */}
+                        <select required onChange={handleChangeNav} value={NavItem.icon} name='icon' className="form-select" >
                             <option selected disabled>Choose Nav Logo...</option>
                             <option value="MdDashboard">Dashboard</option>
                             <option value="FaUser">User</option>
                             <option value="IoMdSettings">Setting</option>
+                            <option value="RiTeamFill">Team</option>
+                            <option value="RiMenuAddFill">Menu</option>
+                            <option value="TbListDetails">List</option>
                         </select>
 
                         {/* Image Option Select */}
@@ -83,14 +110,14 @@ const ManageNavigation = () => {
                     <div className="col-auto">    
                         <div className="checkbox-wrapper-6" style={{display : "block"}}>
                             <label className="" htmlFor="autoSizingSelect">OFF/ON</label>
-                            <input onChange={handleChangeNav} value={NavItem.show} name='show' className="tgl tgl-light" id="cb1-6" type="checkbox"  />
+                            <input onChange={handleCheckBox} checked={NavItem.show} name='show' className="tgl tgl-light" id="cb1-6" type="checkbox"  />
                             <label className="tgl-btn" htmlFor="cb1-6"> </label>
                         </div>
                     </div>
                     <div className="col-auto">
-                        <button onClick={handleAddNavItem} className="btn admin-main-btn">Add+</button>
+                        <button type='submit' className="btn admin-main-btn">{buttonType}</button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
 
@@ -101,6 +128,7 @@ const ManageNavigation = () => {
                 <table className="centent-align-center table table-hover text-sm text-gray-500">
                     <thead>
                         <tr className="text-sm">
+                            <th scope="col" className="p-3 font-semibold"><h4>Sr.</h4></th>
                             <th scope="col" className="p-3 font-semibold"><h4>Icon</h4></th>
                             <th scope="col" className="p-3 font-semibold"><h4>NavItem Name</h4></th>
                             <th scope="col" className="p-3 font-semibold"><h4>NavItem Link</h4> </th>
@@ -115,6 +143,9 @@ const ManageNavigation = () => {
                                 return(
                                     <tr key={i+1}>
                                         <td className="p-3 text-sm">
+                                            <h4 className=" font-bold">{i+1}</h4>
+                                        </td>
+                                        <td className="p-3 text-sm">
                                             {NavIcon = allIcons[e.icon]}
                                             <h2 className=" font-bold">{NavIcon && <NavIcon />}</h2>
                                         </td>
@@ -127,14 +158,15 @@ const ManageNavigation = () => {
                                         <td className="p-3">
                                             <div className="checkbox-wrapper-6">
                                                 <label className="" htmlFor="autoSizingSelect"></label>
-                                                <input className="tgl tgl-light" id={'cb1-'+(i+1)} type="checkbox" checked={e.show} />
-                                                <label className="tgl-btn" htmlFor="cb1-7"> </label>
+                                                <input className="tgl tgl-light" id={'cb1-'+(i+1)} type="checkbox" checked={e.show}  onChange={()=> handleShowData(i)} />
+                                                <label className="tgl-btn" htmlFor={`cb1-${i + 1}`}> </label>
                                             </div>   
                                         </td>
                                         <td className="p-3" style={{display: "flex", justifyContent: ""}}>
                                             {/* <span className="inline-flex items-center rounded-3xl font-semibold bg-teal-400 text-teal-500"><MdIcons.MdOutlineDeleteForever /></span> */}
+                                            <h4 onClick={()=> setNavItem(e)} data-bs-toggle="offcanvas" data-bs-target="#viewNavigationDetail" aria-controls="offcanvasRight" className='text-dark' style={{cursor: "pointer ", marginRight: "15px"}}  ><FaIcons.FaRegEye /></h4>
                                             <h2 className='text-danger' style={{cursor: "pointer ", marginRight: "15px"}} onClick={()=>handleNavDelete(i)} ><MdIcons.MdOutlineDeleteForever /></h2>
-                                            <h3 className='text-primary' style={{cursor: "pointer"}} ><FaIcons.FaEdit /></h3>
+                                            <h3 className='text-primary' style={{cursor: "pointer"}} onClick={()=>handleNavEdit(e, i)} ><FaIcons.FaEdit /></h3>
                                         </td>
                                         {/* <td className="p-3">
                                              <span className="inline-flex items-center rounded-3xl font-semibold bg-teal-400 text-teal-500"><MdIcons.MdOutlineDeleteForever /></span>
@@ -146,6 +178,41 @@ const ManageNavigation = () => {
                     </tbody>
                 </table>
             </div>									
+        </div>
+
+
+        {/* Sidebar  */}
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="viewNavigationDetail" aria-labelledby="offcanvasRightLabel">
+          <div class="offcanvas-header">
+              <h4 style={{fontWeight: "bold" }} class="offcanvas-title" id="offcanvasRightLabel">Navigation Details</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <div className="row gy-2 gx-3 align-items-center">
+                <div className="col-100 mt-3" style={{display: "flex",justifyContent: "space-between"}}> 
+                    <label style={{fontWeight: "bold" }} className="" htmlFor="">Show Status</label>   
+                    <div className="checkbox-wrapper-6 d-flex" style={{display : "block"}}>
+                        <label className="" htmlFor="autoSizingSelect">OFF/ON</label>
+                        <input onChange={handleCheckBox} checked={NavItem.show} name='show' className="tgl tgl-light" id="cb1-6" type="checkbox"  />
+                        <label className="tgl-btn" htmlFor="cb1-6"> </label>
+                    </div>
+                </div>
+                <div className="col-100 mt-3">
+                    <label style={{fontWeight: "bold" }} className="" htmlFor="">Navigation Name</label>
+                    <p className='m-0' >{NavItem.itemName} </p>
+                </div>
+                <div className="col-100 mt-3">
+                    <label className="" style={{fontWeight: "bold" }} htmlFor="">Navigation Icon</label>
+                    {NavIcon = allIcons[NavItem.icon]}
+                    <h2 className=" font-bold">{NavIcon && <NavIcon />} <span className='m-0' style={{fontSize:"20px", marginLeft: "18px"}} >{NavItem.icon} </span></h2>
+                    
+                </div>
+                <div className="col-100 mt-3">
+                    <label className="" style={{fontWeight: "bold" }} htmlFor="">Navigation Link</label>
+                    <p className='m-0' >{NavItem.itemLink} </p>
+                </div>
+            </div>
+          </div>
         </div>
     </>
   )
