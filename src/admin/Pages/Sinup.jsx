@@ -1,6 +1,9 @@
 import React, {useState } from 'react'
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 const Sinup = () => {
     const navigate = useNavigate()
@@ -29,16 +32,32 @@ const Sinup = () => {
         }
      }
 
-    const handleSubmit = () => {
-        if(varify()){
-            localStorage.setItem("InfinexAdminSignup", JSON.stringify(SinupData))
+    // const handleSubmit = () => {
+    //     if(varify()){
+    //         localStorage.setItem("InfinexAdminSignup", JSON.stringify(SinupData))
 
-            setSinupData({
-                name : "",
-                email : "",
-                password: ""
-            })
-            navigate("/login")
+    //         setSinupData({
+    //             name : "",
+    //             email : "",
+    //             password: ""
+    //         })
+    //         navigate("/login")
+    //     }
+    // }
+    const handleSubmit = async() => {
+        if(varify()){
+            try {
+                const response = await axios.post(`${REACT_APP_API_URL}/admin/signup`, SinupData);
+                if(response.data.success){
+                    alert(response.data.message)
+                    navigate("/login")
+                }else{
+                    alert(response.data.message)
+                }
+
+            } catch (error) {
+                console.log("Error in Signup API")
+            }
         }
     }
 

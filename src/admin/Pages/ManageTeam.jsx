@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import * as MdIcons from 'react-icons/md';
 import * as FaIcons from 'react-icons/fa';
 import {AllTeam} from '../../LocalAssets/SampleData'
+import axios from 'axios';
+
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 const ManageTeam = () => {
 
@@ -39,16 +42,46 @@ const ManageTeam = () => {
     }
 
 
-    const handleAddTeam = (e) => {
+    const handleAddTeam = async(e) => {
         e.preventDefault();
         if(buttonType === "UPDATE"){
-            // AllTeamData[] = Team ;
+            try {
+                const APITeamData = await axios.put(`${REACT_APP_API_URL}/admin/manageteam/updatemember/${Team._id}`, Team)
+
+                console.log("APITeamData",  APITeamData)
+
+                if(APITeamData.data.success){
+                    alert(APITeamData.data.message)
+
+                    GetMembers()
+                }else{
+                    console.log("Update Member Response : ", APITeamData.data)
+                }
+
+            } catch (error) {
+                console.log("Error in Update Member API")
+            }
 
             setbuttonType("ADD+")
         }else{
-            const preNav = [...AllTeamData, Team]
-    
-            setAllTeamData(preNav)
+            
+            try {
+                const APITeamData = await axios.post(`${REACT_APP_API_URL}/admin/manageteam/addmember`, Team)
+
+                if(APITeamData.data.success){
+                    alert(APITeamData.data.message)
+
+                    GetMembers()
+                }else{
+                    console.log("Add Member Response : ", APITeamData.data)
+                }
+
+            } catch (error) {
+                console.log("Error in Adding Member API")
+            }
+            
+            // const preNav = [...AllTeamData, Team]
+            // setAllTeamData(preNav)
         }
 
         setTeam({
@@ -70,10 +103,12 @@ const ManageTeam = () => {
         newList.splice(i,1)
         setAllTeamData(newList)
     }
+
     const handleEditTeam = (e, i) => {
         setTeam(e)
         openModal()
         setbuttonType("UPDATE")
+        // handleAddTeam()
     }
 
     const openModal = () => {
@@ -88,9 +123,42 @@ const ManageTeam = () => {
         }, 300);
     };
 
+    // Team Api's 
+    const GetMembers = async () => {
+        try {
+
+            const APITeamData = await axios.get(`${REACT_APP_API_URL}/admin/manageteam/getmembers`)    
+            setAllTeamData(APITeamData.data.response)
+
+        } catch (error) {
+            console.log("Error in Get Member's API")
+        }
+    }
+
+    const DeleteMember = async (e) => {
+        try {
+            const APITeamData = await axios.delete(`${REACT_APP_API_URL}/admin/manageteam/deletemember/${e._id}`)
+
+            console.log("APITeamData",  APITeamData)
+
+            if(APITeamData){
+                alert("Delete message successfully")
+
+                GetMembers()
+            }
+
+        } catch (error) {
+            console.log("Error in Deleting Member API")
+        }
+    }
+
     useEffect(()=>{
-        setAllTeamData(AllTeam)
+        // setAllTeamData(AllTeam)
+
+        GetMembers()
     }, [])
+
+
   return (
     <>
         <div className="content-bg-area admin-content-heading">
@@ -98,8 +166,11 @@ const ManageTeam = () => {
 
             <button className="admin-main-btn" onClick={openModal} >Add+ Member</button>
         </div>
-
-        <div className="card-body content-bg-area ">
+        
+        {(AllTeamData.length <= 0) && <div className="card-body content-bg-area text-center">
+            <h4>No Data found</h4>
+        </div>}
+        {(AllTeamData.length > 0) && <div className="card-body content-bg-area ">
             <div className="relative overflow-x-auto">
                 
                 <table className="centent-align-center table table-hover text-sm text-gray-500">
@@ -172,7 +243,7 @@ const ManageTeam = () => {
                                         <td className="p-3" style={{display: "flex", alignItems: "center"}}>
                                             {/* <span className="inline-flex items-center rounded-3xl font-semibold bg-teal-400 text-teal-500"><MdIcons.MdOutlineDeleteForever /></span> */}
                                             <h4 onClick={()=> setTeam(e)} data-bs-toggle="offcanvas" data-bs-target="#viewTeamMemberDetail" aria-controls="offcanvasRight" className='text-dark' style={{cursor: "pointer ", marginRight: "15px"}}  ><FaIcons.FaRegEye /></h4>
-                                            <h2 className='text-danger' style={{cursor: "pointer ", marginRight: "15px"}} onClick={()=>handleDeleteTeam(i)} ><MdIcons.MdOutlineDeleteForever /></h2>
+                                            <h2 className='text-danger' style={{cursor: "pointer ", marginRight: "15px"}} onClick={()=>DeleteMember(e)} ><MdIcons.MdOutlineDeleteForever /></h2>
                                             <h3 className='text-primary' style={{cursor: "pointer"}} onClick={()=>handleEditTeam(e, i)} ><FaIcons.FaEdit /></h3>
                                         </td>
                                         
@@ -183,7 +254,7 @@ const ManageTeam = () => {
                     </tbody>
                 </table>
             </div>									
-        </div>
+        </div>}
 
         {/* Sidebar  */}
         <div class="offcanvas offcanvas-end" tabindex="-1" id="viewTeamMemberDetail" aria-labelledby="offcanvasRightLabel">
@@ -250,7 +321,7 @@ const ManageTeam = () => {
                             </div>
                             <div className="col-100 mt-3">
                                 <label className="" htmlFor="">Profile Image</label>
-                                <input required type="file" id="TeamProfileImage" className="form-control" onChange={(e) => setTeam({...Team, profileImage: e.target.files[0]})} name='profileImage' accept="image/*" placeholder='Profile Image'/>
+                                <input type="file" id="TeamProfileImage" className="form-control" onChange={(e) => setTeam({...Team, profileImage: e.target.files[0]})} name='profileImage' accept="image/*" placeholder='Profile Image'/>
                             </div>
                             <div className="col-100 mt-3">
                                 <label className="" htmlFor="">Member Email</label>
@@ -260,13 +331,11 @@ const ManageTeam = () => {
                                 <label className="" htmlFor="">Member Job Role</label>
                                 <select required onChange={handleChange} value={Team.jobrole} name='jobrole' className="form-select" placeholder="Job Role">
                                     <option selected disabled>Choose Job Title...</option>
-                                    <option value="Manager">Manager</option>
+                                    <option value="Super Admin">Super Admin</option>
                                     <option value="Project Manager">Project Manager</option>
                                     <option value="HR">HR</option>
                                     <option value="Developer">Developer</option>
-                                    <option value="Designer">Designer</option>
-                                    <option value="Quality analysts">Quality analysts</option>
-                                    <option value="Data analysts">Data analysts</option>
+                                    <option value="Marketing">Marketing</option>
                                 </select>
                             </div>
                             <div className="col-100 mt-3">

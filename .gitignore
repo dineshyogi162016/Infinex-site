@@ -1,13 +1,13 @@
-
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
 /node_modules
-/Backup
 /.pnp
 .pnp.js
-/admin-main.css
-/Dashboard.jsx
+# /admin-main.css
+# /Dashboard.jsx
+node_modules/
+
 
 # testing
 /coverage

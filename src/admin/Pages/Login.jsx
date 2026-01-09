@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import { useAuth } from '../../Utilities/ContextAPI/AuthProvider';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 const Login = () => {
     const {checkLogin} = useAuth()
@@ -11,6 +14,10 @@ const Login = () => {
         email : "",
         password: ""
     })
+    const [RememberMe, setRememberMe] = useState(Boolean)
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const [Error, setError] = useState({})
     const [passwordshow, setpasswordshow] = useState("password")
    
@@ -30,30 +37,64 @@ const Login = () => {
         }
      }
 
-    const handleSubmit = () => {
-        const signupData = JSON.parse(localStorage.getItem("InfinexAdminSignup"))
+    // const handleSubmit = () => {
+    //     const signupData = JSON.parse(localStorage.getItem("InfinexAdminSignup"))
         
 
-        if(varify()){
+    //     if(varify()){
 
-            if(signupData.email !== LoginData.email){
-                alert("User not found")
+    //         if(signupData.email !== LoginData.email){
+    //             alert("User not found")
                 
-            }else if(signupData.password !== LoginData.password){
-                alert("Wrong password !")
-            }else{
-                localStorage.setItem("InfinexAdminLogin", JSON.stringify(LoginData))
+    //         }else if(signupData.password !== LoginData.password){
+    //             alert("Wrong password !")
+    //         }else{
+    //             localStorage.setItem("InfinexAdminLogin", JSON.stringify(LoginData))
         
-                setLoginData({
-                    email : "",
-                    password: ""
-                })
-                alert("Login Success")
-                navigate("/dashboard")
+    //             setLoginData({
+    //                 email : "",
+    //                 password: ""
+    //             })
+    //             alert("Login Success")
+    //             navigate("/dashboard")
+    //         }
+    //     }
+    // }
+
+    const handleSubmit = async () => {
+        if(varify()){
+            setIsSubmitting(true);
+            if(RememberMe){
+                const RememberMeDataSet = {
+                    LoginData,
+                    RememberMe
+                }
+                localStorage.setItem("RememberMe", JSON.stringify(RememberMeDataSet))
+            }else{
+                localStorage.removeItem("RememberMe")
             }
+
+            try {
+                const response = await axios.post(`${REACT_APP_API_URL}/admin/send-otp`, LoginData , { withCredentials: true });
+                if(response.data.success){
+                    alert(response.data.message)
+                    navigate("/confirmOTP")
+                    localStorage.setItem("LoginUserData", JSON.stringify(LoginData.email))
+
+                }else{
+                    alert(response.data.message)
+                    
+                }
+
+            } catch (error) {
+                console.log("Error in Login API")
+            }
+
+            setTimeout(() => {
+                setIsSubmitting(false);
+            }, 1500);
         }
     }
-
 
      const varify = () => {
         let localError = {}
@@ -84,7 +125,13 @@ const Login = () => {
 
     useEffect(() => {
         checkLogin();
-    }, [checkLogin]);
+
+        const RememberMeData = JSON.parse(localStorage.getItem("RememberMe"))
+        if(RememberMeData){
+            setLoginData(RememberMeData?.LoginData)
+            setRememberMe(RememberMeData?.RememberMe)
+        }
+    }, []);
       
   return (
     <>
@@ -105,15 +152,23 @@ const Login = () => {
                     <span style={{position:"absolute", right:"10px", top:"5px", cursor:"pointer"}} onClick={handlepasswordshowornot} >{(passwordshow==="password"? <FaRegEyeSlash /> : <FaRegEye /> )}</span>
                     {Error.password && <p className='form-text-error text-danger' >{Error.password}</p> }
                 </label>
-                <label htmlFor="" className='w-100 mt-4'>
-                    <button  className="light-btn btn font-weight-bold w-100 mt-1" onClick={handleSubmit}>Login</button>
+                <label className='w-100 mt-3 mx-1 ' style={{position:"relative"}}>
+                    <input type="checkbox" name="remember" className='' checked={RememberMe} onChange={()=> setRememberMe(!RememberMe) } /> Remember Me
                 </label>
-                <label htmlFor="" className='w-100 mt-4 text-center'>
+                <label htmlFor="" className='w-100 mt-3'>
+                    {isSubmitting ? (
+                        <div className="home-loading-spinner"></div>
+                    ) : (
+                        <button  className="light-btn btn font-weight-bold w-100 mt-1" style={{ cursor: isSubmitting ? 'not-allowed' : 'pointer' }} onClick={handleSubmit}>Send OTP</button>
+                    )}
+                    </label>
+                {/* <label htmlFor="" className='w-100 mt-4 text-center'>
                     Don't have an account ? <Link to={"/signup"}>Register</Link>    
-                 </label>
-                <label htmlFor="" className='w-100 mt-2 text-center'>
+                 </label> */}
+
+                {/* <label htmlFor="" className='w-100 mt-2 text-center'>
                     <Link to={"/forgotpassword"}>Forgot Password</Link>    
-                 </label>
+                 </label> */}
                 </div>   
             </div>
         </div>

@@ -6,7 +6,7 @@ const UserRoute = (props) => {
   const {Component} = props;
 
   return (
-    <>  
+    <>
       <Header />
       <Component />
       <Footer />
@@ -15,3 +15,5 @@ const UserRoute = (props) => {
 }
 
 export default UserRoute
+
+

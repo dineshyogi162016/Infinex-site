@@ -8,6 +8,10 @@ import { Link } from 'react-router-dom';
 import { FaSquareGithub, FaSquareInstagram, FaLinkedin, FaLocationDot } from 'react-icons/fa6';
 import { IoMailOpen } from 'react-icons/io5';
 
+import axios from 'axios';
+
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL
+
 const ManageContact = () => {
 
 
@@ -35,6 +39,15 @@ const ManageContact = () => {
     const [ReadMessage, setReadMessage] = useState(false)
     const [isReadMessageClosing, setisReadMessageClosing] = useState(false)
     
+    // Pagination Assets 
+        const [currentPage, setcurrentPage] = useState(1)
+        const recordPerPage = 5;
+        const lastIndex = currentPage * recordPerPage;
+        const firstIndex = lastIndex - recordPerPage;
+        const records = ContactUsAllData.slice(firstIndex, lastIndex)
+        const nPage = Math.ceil(ContactUsAllData.length / recordPerPage)
+        const numbers = [...Array(nPage + 1).keys()].slice(1)
+    
 
     const handleChange = (e)=>{
         // setContactsData({...ContactsData, [e.target.name] : e.target.value, SocialMedia: {[e.target.name] : e.target.value}})
@@ -45,10 +58,19 @@ const ManageContact = () => {
         )
     }
 
-    const handleAddEditContact = (e) => {
+    const handleAddEditContact = async (e) => {
         e.preventDefault();
         if(buttonType === "UPDATE"){
-            // ContactUsAllData[] = Team ;
+            try {
+                const updateCompanyData = await axios.put(`${REACT_APP_API_URL}/admin/managecontact/updateCompanyData/${ContactsData._id}`, ContactsData)
+
+                if(updateCompanyData.data.success){
+                    GetCompanyContacts()
+                }
+
+            } catch (error) {
+                console.log("Error in Update Member API")
+            }
 
             setbuttonType("ADD+")
         }else{
@@ -90,6 +112,9 @@ const ManageContact = () => {
 
 
         setShowMessage(e)
+        if(!e.read){
+            ReadContactsMessage(e)
+        }
     };
 
     const closeReadMessageModal = () => {
@@ -99,11 +124,83 @@ const ManageContact = () => {
         }, 300);
     };
 
-    console.log("ContactsData : ", ContactsData )
-    useEffect(()=>{
-        setContactUsAllData(ContactUs.ContactUsData)
 
-        setContactsData(ContactUs.ContactDetails)
+    // Contact Data Functions 
+    const GetContacts = async () => {
+        try {
+
+            const APITeamData = await axios.get(`${REACT_APP_API_URL}/admin/managecontact/GetContact`)    
+            setContactUsAllData(APITeamData.data.response)
+        
+
+        } catch (error) {
+            console.log("Error in Get Member's API")
+        }
+    }
+
+    const ReadContactsMessage = async (e) => {
+        try {
+            const ReadContact = await axios.put(`${REACT_APP_API_URL}/admin/managecontact/ReadContactMessage/${e._id}`)
+
+            if(ReadContact.data.success){
+                GetContacts()
+            }
+
+        } catch (error) {
+            console.log("Error in Update Member API")
+        }
+    }
+
+    const DeleteMessage = async (e) => {
+        try {
+                const APIContactData = await axios.delete(`${REACT_APP_API_URL}/admin/managecontact/DeleteContact/${e._id}`)
+
+                if(APIContactData){
+                    alert("Delete Contact's Data successfully")
+
+                    GetContacts()
+                }
+
+            } catch (error) {
+                console.log("Error in Deleting Member API")
+            }
+    }
+
+    // Company Contact Data Functions
+    const GetCompanyContacts = async () => {
+        try {
+            const APICompanyData = await axios.get(`${REACT_APP_API_URL}/admin/managecontact/getCompanyData`)    
+            setContactsData(APICompanyData.data.response[0])
+
+        } catch (error) {
+            console.log("Error in Get Member's API")
+        }
+    }
+
+
+    // Pagination pages 
+    const nextPage = () =>{
+        if(currentPage !== nPage){
+            setcurrentPage(currentPage+1)
+        }
+    }
+
+    const previosPage = () => {
+        if(currentPage !== 1){
+            setcurrentPage(currentPage-1)
+        }
+    }
+
+    const changePage = (id) => {
+        setcurrentPage(id)
+    }
+
+    useEffect(()=>{
+        // setContactUsAllData(ContactUs.ContactUsData)
+
+        // setContactsData(ContactUs.ContactDetails)
+        GetContacts()
+        GetCompanyContacts()
     }, [])
   return (
     <>
@@ -186,27 +283,30 @@ const ManageContact = () => {
         <div className="card-body content-bg-area ">
             <div className="relative overflow-x-auto">
                 <h1 className='text-center' style={{fontWeight:"bold"}} >Get In Touch</h1><hr />
-                <table className="centent-align-center table table-hover text-sm text-gray-500">
+                {(ContactUsAllData.length <= 0) && <div className="card-body content-bg-area text-center">
+                    <h4>No Data found</h4>
+                </div>}
+                {(ContactUsAllData.length > 0) && <table className="centent-align-center table table-hover text-sm text-gray-500">
                     <thead>
                         <tr className="text-sm">
                         <th scope="col" className="p-3 font-semibold"><h4>Sr.</h4></th>
                              <th scope="col" className="p-3 font-semibold"><h4>Name</h4></th>
                             <th scope="col" className="p-3 font-semibold"><h4>Email</h4> </th>
-                            <th scope="col" className="p-3 font-semibold"><h4>Contact</h4></th>
-                            <th scope="col" className="p-3 font-semibold"><h4>Address</h4></th>
+                            <th scope="col" className="p-3 font-semibold"><h4>Subject</h4></th>
+                            <th scope="col" className="p-3 font-semibold"><h4>Message</h4></th>
                             <th scope="col" className="p-3 font-semibold"><h4>Action</h4></th>
                             {/* <th scope="col" className="p-3 font-semibold"><h4>Edit</h4></th> */}
                         </tr>
                     </thead>
                     <tbody>
-                        {ContactUsAllData && ContactUsAllData.map((e, i)=>{
+                        {records.map((e, i)=>{
                             return(
-                                <tr key={i+1} style={{fontWeight: e.read === 1 ? "bold" : "400" }}>
+                                <tr key={i+1} style={{fontWeight: e.read === false ? "bold" : "400" }}>
                                     <td className="p-3 text-sm">
-                                        <h4 className="" style={{fontWeight: e.read === 1 ? "bold" : "400" }}>{i+1}</h4>
+                                        <h4 className="" style={{fontWeight: e.read === false ? "bold" : "400" }}>{i+1}</h4>
                                     </td>
                                     <td className="p-3">
-                                        <h5 className="" style={{fontWeight: e.read === 1 ? "bold" : "400" }}>{e.name}</h5>
+                                        <h5 className="" style={{fontWeight: e.read === false ? "bold" : "400" }}>{e.name}</h5>
                                     </td>
                                     <td className="p-3">
                                         <p className="font-medium text-teal-500">{e.email}</p>
@@ -215,12 +315,12 @@ const ManageContact = () => {
                                         <p className="font-medium text-teal-500">{e.subject}</p>
                                     </td>
                                     <td className="p-3">
-                                        <p className="font-medium text-teal-500">{e.address}</p>
+                                        <p className="font-medium text-teal-500">{e.message}</p>
                                     </td>
                                     <td className="p-3" style={{display: "flex", alignItems: "center"}}>
                                         {/* <span className="inline-flex items-center rounded-3xl font-semibold bg-teal-400 text-teal-500"><MdIcons.MdOutlineDeleteForever /></span> */}
-                                        <h2 className='text-danger' style={{cursor: "pointer ", marginRight: "15px"}} onClick={()=>handleDeleteContact(i)} ><MdIcons.MdOutlineDeleteForever /></h2>
-                                        <h3 className='' style={{cursor: "pointer"}} onClick={()=>openReadMessageModal(e, i)} >{e.read === 1 ? <IoIcons.IoMdMailUnread />: <IoMailOpen />}</h3>
+                                        <h2 className='text-danger' style={{cursor: "pointer ", marginRight: "15px"}} onClick={()=>DeleteMessage(e)} ><MdIcons.MdOutlineDeleteForever /></h2>
+                                        <h3 className='' style={{cursor: "pointer"}} onClick={()=>openReadMessageModal(e, i)} >{e.read === false ? <IoIcons.IoMdMailUnread />: <IoMailOpen />}</h3>
                                     </td>
                                     
                                 </tr>
@@ -228,8 +328,35 @@ const ManageContact = () => {
                         })
                         }
                     </tbody>
-                </table>
-            </div>									
+                </table>}
+            </div>	
+
+            <nav aria-label="Page navigation example ">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous" onClick={previosPage}>
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only"></span>
+                        </a>
+                    </li>
+                    {
+                        numbers.map((n,i) => (
+                            <li class={`page-item ${currentPage === n ? 'active': ''}`} key={i}>
+                                <a class="page-link" href="#" onClick={()=>changePage(n)}>
+                                    {n}
+                                </a>
+                            </li>
+                        ))
+                    }
+                    
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next" onClick={nextPage}>
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only"></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>									
         </div>
 
         {/* Modal Box  */}
@@ -307,10 +434,6 @@ const ManageContact = () => {
                         <div className="col-100 mt-3">
                             <label className="" htmlFor="">Subject</label>
                             <span style={{fontWeight: "400"}} >{ShowMessage.subject}</span>
-                        </div>
-                        <div className="col-100 mt-3">
-                            <label className="" htmlFor="">Address</label>
-                            <span style={{fontWeight: "400"}} >{ShowMessage.address}</span>
                         </div>
                         <div className="col-100 mt-3">
                             <label className="" htmlFor="">Message</label>

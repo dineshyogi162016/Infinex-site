@@ -2,13 +2,20 @@ body {
     /* min-height: 100vh; */
     /* display: flex; */
     /* flex-direction: column; */
-    
+
     margin: 0;
     padding: 0;
     /* overflow: hidden; */
 }
 
-table h1, table h2, table h3, table h4, table h5, table h6, table p, table span{
+table h1,
+table h2,
+table h3,
+table h4,
+table h5,
+table h6,
+table p,
+table span {
     margin: 0;
     padding: 0;
 }
@@ -33,25 +40,26 @@ table h1, table h2, table h3, table h4, table h5, table h6, table p, table span{
 ::-webkit-scrollbar-thumb {
     background: #fff;
     border-radius: 10px;
-    border: 1px solid rgb(240 245 249 / var(--tw-bg-opacity, 1));;
+    border: 1px solid rgb(240 245 249 / var(--tw-bg-opacity, 1));
+    ;
 }
 
-::-webkit-scrollbar-track {
-    /* background: #0000001d; */
-}
+/* ::-webkit-scrollbar-track {
+    background: #0000001d;
+} */
 
 /* Common CSS  */
-.light-btn{
+.light-btn {
     background-color: #fff;
     border: 1px solid rgb(240 245 249 / var(--tw-bg-opacity, 1)) !important;
 }
 
-.light-btn:hover{
+.light-btn:hover {
     background-color: rgb(240 245 249 / var(--tw-bg-opacity, 1));
     transition: 0.3s all;
 }
 
-.admin-main-btn{
+.admin-main-btn {
     padding: 7px 20px;
     background-color: #0f75bb;
     color: #fff;
@@ -60,17 +68,18 @@ table h1, table h2, table h3, table h4, table h5, table h6, table p, table span{
     border: none;
     cursor: pointer;
 }
-.admin-main-btn:hover{
+
+.admin-main-btn:hover {
     background-color: #f0f5f9;
     color: #000;
     /* border: #0f75bb 1px solid; */
 }
 
-.admin-radius{
+.admin-radius {
     border-radius: 20px;
 }
 
-.admin-box-hover:hover{
+.admin-box-hover:hover {
     background-color: #f0f5f9 !important;
     box-shadow: 0 0 0px 0px #ece3e3 !important;
     transform: translateY(-5px);
@@ -78,7 +87,8 @@ table h1, table h2, table h3, table h4, table h5, table h6, table p, table span{
     transition: 250ms;
 }
 
-.centent-align-center th , .centent-align-center td {
+.centent-align-center th,
+.centent-align-center td {
     vertical-align: middle;
 }
 
@@ -86,9 +96,10 @@ table h1, table h2, table h3, table h4, table h5, table h6, table p, table span{
 
 
 .admin-dashboard {
-    overflow: hidden;
     height: 100vh;
+    overflow: hidden;
 }
+
 .admin-container {
     flex: 1;
     display: flex;
@@ -100,7 +111,7 @@ table h1, table h2, table h3, table h4, table h5, table h6, table p, table span{
 }
 
 /* Navbar  */
-.admin-navbar{
+.admin-navbar {
     position: sticky;
     top: 0;
     background-color: #fff !important;
@@ -108,14 +119,15 @@ table h1, table h2, table h3, table h4, table h5, table h6, table p, table span{
     box-shadow: 1px 1px 18px -15px;
 }
 
-#admin-Mobile-nav{
+#admin-Mobile-nav {
     display: none;
 }
 
-.admin-nav-logo{
+.admin-nav-logo {
     padding: 12px 10px;
 }
-.admin-nav-logo img{
+
+.admin-nav-logo img {
     width: 145px;
     margin-left: 10px;
     cursor: pointer;
@@ -142,18 +154,18 @@ table h1, table h2, table h3, table h4, table h5, table h6, table p, table span{
     background-color: #f8f9fa;
 }
 
-#admin-sidebar{
+#admin-sidebar {
     background-color: #fff;
     color: #fff !important;
 }
 
 #admin-sidebar .side-nav-bar {
     overflow-y: auto;
-    height: 100vh;
+    height: 87vh;
     padding: 10px 10px;
 }
 
-.admin-dashboard{
+.admin-dashboard {
     background-color: rgb(240 245 249 / var(--tw-bg-opacity, 1));
     padding: 20px 0 0 20px;
 }
@@ -163,29 +175,30 @@ table h1, table h2, table h3, table h4, table h5, table h6, table p, table span{
     /* margin-bottom: 15px; */
     border-radius: 10px;
     outline: none;
-    border:none;
+    border: none;
     transition: all 0.5s ease-in;
     margin-bottom: 5px;
 }
 
-.admin-dashboard li.nav-item a.active, .admin-dashboard li.nav-item :hover{
+.admin-dashboard li.nav-item a.active,
+.admin-dashboard li.nav-item :hover {
     color: #5858f3;
     background-color: rgb(240 245 249 / var(--tw-bg-opacity, 1));
     border-radius: 10px;
     transition: all 0.3s ease-in;
 }
 
-.admin-dashboard  .nav-link {
+.admin-dashboard .nav-link {
     color: #000;
     font-size: 20px;
     outline: none;
 }
 
-.admin-dashboard .sidebar .nav-link{
+.admin-dashboard .sidebar .nav-link {
     padding: 7px 10px;
 }
 
-.admin-dashboard .sidebar .nav-link svg{
+.admin-dashboard .sidebar .nav-link svg {
     font-size: 30px;
     margin-right: 12px;
 }
@@ -195,7 +208,7 @@ table h1, table h2, table h3, table h4, table h5, table h6, table p, table span{
 
 
 /* Content Area */
-#admin-content-area{
+#admin-content-area {
     /* min-height: 700px; */
     height: 100vh;
     overflow-y: auto;
@@ -224,7 +237,7 @@ table h1, table h2, table h3, table h4, table h5, table h6, table p, table span{
     align-items: center;
 }
 
-.Login-form{
+.Login-form {
     padding: 30px 20px 20px 20px !important;
     background-color: #fff;
     max-height: 625px;
@@ -235,20 +248,20 @@ table h1, table h2, table h3, table h4, table h5, table h6, table p, table span{
     text-align: center;
 }
 
-.login-header-image{
+.login-header-image {
     max-width: 150px;
     /* border-radius: 50%; */
 }
 
-.Login-form input{
+.Login-form input {
     border-bottom: 1px solid rgb(240 245 249 / var(--tw-bg-opacity, 1)) !important;
     border: none;
     /* padding: 10px; */
 }
 
-input[type="password"]:focus{
-    border:none;
-    outline:none;
+input[type="password"]:focus {
+    border: none;
+    outline: none;
 }
 
 .form-control:focus {
@@ -256,18 +269,19 @@ input[type="password"]:focus{
     box-shadow: 0 0 0 0.1px rgba(40, 167, 69, 0.25);
 }
 
-.form-text-error{
+.form-text-error {
     margin: 0px 0 0 12px;
 }
 
 
 /* Admin Site Style  */
-.admin-content-heading{
+.admin-content-heading {
     display: flex;
     justify-content: space-between;
 }
+
 /* Admin Manage Navigation  */
-.ManageNavigation .navigation-Form{
+.ManageNavigation .navigation-Form {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -310,11 +324,13 @@ input[type="password"]:focus{
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     animation: slideDown 0.3s ease-out forwards;
 }
-.Admin-form-modal .modal-heading{
+
+.Admin-form-modal .modal-heading {
     padding: 20px 20px 10px 20px;
     border-bottom: 1px solid #f0f5f9;
 }
-.Admin-form-modal form{
+
+.Admin-form-modal form {
     overflow-y: auto;
     height: 550px;
     min-height: 500px;
@@ -356,21 +372,23 @@ input[type="password"]:focus{
 }
 
 .Admin-form-modal .close-btn:hover {
-    color: #ff0000; }
+    color: #ff0000;
+}
 
 
 /* Admin contact us  */
-.admin-social-card{
+.admin-social-card {
     max-width: 260px;
 }
 
-.admin-social-card .card{
+.admin-social-card .card {
     background-color: #fff;
     border: none;
     box-shadow: 0 0 10px 0px #ece3e3;
     border-radius: 20px;
 }
-.admin-social-card a{
+
+.admin-social-card a {
     font-size: 14px !important;
 }
 
@@ -378,19 +396,60 @@ input[type="password"]:focus{
     overflow-x: hidden;
     padding: 2px;
 }
-.admin-contact-show div.col-100{
+
+.admin-contact-show div.col-100 {
     display: flex;
     align-items: center;
     box-shadow: 0 0 10px 0px #ece3e3;
     padding: 10px 10px;
     border-radius: 20px;
 }
-.admin-contact-show label{
+
+.admin-contact-show label {
     font-size: 20px;
     font-weight: bold;
     margin-left: 10px;
 }
-.admin-contact-show span{
+
+.admin-contact-show span {
     margin-left: 10px;
     overflow: hidden;
 }
+
+
+/* Setting page style Start  */
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1;
+}
+
+.settings-section {
+    background-color: #fff;
+    border-radius: 20px ;
+    padding: 20px ;
+    box-shadow: var(--shadow-sm);
+    box-shadow: 0 0 0px 0px #ece3e3 !important;
+}
+
+.settings-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+    color: var(--primary-color);
+}
+
+.settings-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.settings-header svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Setting page style End  */

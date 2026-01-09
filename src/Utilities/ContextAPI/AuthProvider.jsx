@@ -1,6 +1,11 @@
 import React, { createContext, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from "axios";
+
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL
+
 const AuthContext = createContext()
+
 
 
 export const useAuth = () => {
@@ -16,14 +21,19 @@ const AuthProvider = ({children}) => {
 
         if(loginData){
             navigate("/dashboard")
-        }else{
-            navigate("/login")
         }
+        // else{
+        //     navigate("/login")
+        // }
 
     }
 
-    const logOut = () => {
-      localStorage.removeItem("InfinexAdminLogin");
+    const logOut = async() => {
+      const response = await axios.post(`${REACT_APP_API_URL}/admin/logout`, {}, { withCredentials: true });
+
+      if(response.data.success){
+        alert(response.data.message)
+      }
     }
 
     // useEffect(() =>{

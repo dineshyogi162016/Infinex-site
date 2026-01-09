@@ -8,6 +8,9 @@ import { useAuth } from '../Utilities/ContextAPI/AuthProvider';
 import { RiMenuAddFill, RiTeamFill } from 'react-icons/ri';
 import { TbListDetails } from 'react-icons/tb';
 import Profile from '../admin/Component/Profile';
+import axios from "axios";
+
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 const AdminRoute = (props) => {
   const {Component} = props;
@@ -18,13 +21,30 @@ const AdminRoute = (props) => {
         logOut()
         navigate("/login")
     }
+    
+    // const getCookie = (name) => {
+    //     const value = `; ${document.cookie}`;
+    //     const parts = value.split(`; ${name}=`);
+    //     if (parts.length === 2) return parts.pop().split(';').shift();
+    
+    // }
 
-    useEffect(() => {
-        const loginData = JSON.parse(localStorage.getItem("InfinexAdminLogin"))
-
-        if(!loginData){
+    const LoginOrNot = async() =>{
+        const response = await axios.get(`${REACT_APP_API_URL}/admin/checklogin`, {withCredentials: true})
+        if(!response.data.success){
             navigate("/login")
         }
+    }
+
+    useEffect(() => {
+        // const loginData = JSON.parse(localStorage.getItem("InfinexAdminLogin"))
+        // const LoginToken = getCookie("InfinexToken")
+
+        // if(!LoginToken){
+        //     navigate("/login")
+        // }
+
+        LoginOrNot()
     },[])
   return (
     <div className="admin-dashboard" >
@@ -35,7 +55,7 @@ const AdminRoute = (props) => {
            <div className=" sidebar admin-radius" id='admin-sidebar'>
             <div className='admin-nav-logo'>
                 <Navbar.Brand className="p-0">
-                    <Link to={'/dashboard'}>
+                    <Link to={'/'}>
                         <img src="/infinexLogo.svg" alt="Infinex Logo" />
                     </Link>
                 </Navbar.Brand>
@@ -49,7 +69,14 @@ const AdminRoute = (props) => {
                     <li className="nav-item"><NavLink className="nav-link" to={"/ManageContact"} ><span className='icon mr-2'> <MdPermContactCalendar /></span>Contact Us</NavLink></li>
                     <li className="nav-item"><NavLink className="nav-link" to={"/ManagePortfolio"} ><span className='icon mr-2'> <TbListDetails /></span>Portfolio</NavLink></li>
                     <li className="nav-item"><NavLink className="nav-link" to={"/ManageCareer"} ><span className='icon mr-2'><FaFileAlt /></span>Career</NavLink></li>
-                    <li className="nav-item"><NavLink className="nav-link" to={"/setting"} ><span className='icon mr-2'><IoMdSettings /></span>Settings</NavLink></li>
+                    <li className="nav-item"><NavLink className="nav-link" to={"/ManageSetting"} ><span className='icon mr-2'><IoMdSettings /></span>Settings</NavLink></li>
+                    
+                    {/* Janvi Sidebar Links  */}
+                    <li className="nav-item"><NavLink className="nav-link" to={"/AboutAdmin"} ><span className='icon mr-2'><MdDashboard /></span>About</NavLink></li> 
+					<li className="nav-item"><NavLink className="nav-link" to={"/ServicesAdmin"} ><span className='icon mr-2'><IoMdSettings /></span>Services</NavLink></li>
+                    <li className="nav-item"><NavLink className="nav-link" to={"/BlogAdmin"} ><span className='icon mr-2'><IoMdSettings /></span>Blogs</NavLink></li>
+					<li className="nav-item"><NavLink className="nav-link" to={"/TestimonialAdmin"} ><span className='icon mr-2'><MdDashboard /></span>Testimonials</NavLink></li> 
+					{/*<li className="nav-item"><NavLink className="nav-link" to={"/AboutAdminJanvi"} ><span className='icon mr-2'><MdDashboard /></span>AboutPage</NavLink></li> */}
                     
                 </ul>
             </div>
@@ -107,12 +134,22 @@ const AdminRoute = (props) => {
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
                         <Navbar.Collapse id="basic-navbar-nav" className='admin-radius'>
                         <Nav className="ms-auto">
-                            <ul className="nav">
+                            <ul className="nav flex-column mt-2">
                                 <li className="nav-item"><NavLink className="nav-link" to={"/dashboard"} ><span className='icon mr-2'><MdDashboard /></span>Dashboard</NavLink></li> 
-                                <li className="nav-item"><NavLink className="nav-link" to={"/team"} ><span className='icon mr-2'> <FaUser /></span>Team</NavLink></li>
+                                <li className="nav-item"><NavLink className="nav-link" to={"/ManageTeam"} ><span className='icon mr-2'> <RiTeamFill /></span>Team</NavLink></li>
+                                <li className="nav-item"><NavLink className="nav-link" to={"/ManageNavigation"} ><span className='icon mr-2'><RiMenuAddFill /></span>Navigation</NavLink></li> 
+                                <li className="nav-item"><NavLink className="nav-link" to={"/ManageContact"} ><span className='icon mr-2'> <MdPermContactCalendar /></span>Contact Us</NavLink></li>
+                                <li className="nav-item"><NavLink className="nav-link" to={"/ManagePortfolio"} ><span className='icon mr-2'> <TbListDetails /></span>Portfolio</NavLink></li>
+                                <li className="nav-item"><NavLink className="nav-link" to={"/ManageCareer"} ><span className='icon mr-2'><FaFileAlt /></span>Career</NavLink></li>
                                 <li className="nav-item"><NavLink className="nav-link" to={"/setting"} ><span className='icon mr-2'><IoMdSettings /></span>Settings</NavLink></li>
-                                <li className="nav-item"><NavLink className="nav-link" to={"/dashboard"} ><span className='icon mr-2'><MdDashboard /></span>Dashboard</NavLink></li> 
-                                <li className="nav-item"><NavLink className="nav-link" to={"/team"} ><span className='icon mr-2'> <FaUser /></span>Team</NavLink></li>
+                                
+                                {/* Janvi Sidebar Links  */}
+                                <li className="nav-item"><NavLink className="nav-link" to={"/AboutAdmin"} ><span className='icon mr-2'><MdDashboard /></span>About</NavLink></li> 
+                                <li className="nav-item"><NavLink className="nav-link" to={"/ServicesAdmin"} ><span className='icon mr-2'><IoMdSettings /></span>Services</NavLink></li>
+                                <li className="nav-item"><NavLink className="nav-link" to={"/BlogAdmin"} ><span className='icon mr-2'><IoMdSettings /></span>Blogs</NavLink></li>
+                                <li className="nav-item"><NavLink className="nav-link" to={"/TestimonialAdmin"} ><span className='icon mr-2'><MdDashboard /></span>Testimonials</NavLink></li> 
+                                {/*<li className="nav-item"><NavLink className="nav-link" to={"/AboutAdminJanvi"} ><span className='icon mr-2'><MdDashboard /></span>AboutPage</NavLink></li> */}
+                                
                             </ul>
                         </Nav>
                         </Navbar.Collapse>
