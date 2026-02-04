@@ -16,6 +16,13 @@ app.use(cors({
   }));
 app.use("/uploads", express.static("uploads")); // Backend folder ki image ko url ke throw frontend me show karwane ke liye 
 
+
+// Testing End Point 
+app.get("/", (req, res)=>{
+   res.send("My-Portfolio server running successfylly")
+})
+
+
 // Router for Admin API's 
 const AdminRouter = require("./Router/AdminRouter")
 app.use('/admin', AdminRouter)
@@ -29,3 +36,5 @@ app.use('/user', UserRouter)
 app.listen(port, ()=>{
     console.log(`Server is running on port http://localhost:${port}`)
 })
+
+export default app;
