@@ -1,8 +1,12 @@
-const express = require("express")
+// const express = require("express")
+import express from "express";
 const app = express()
-const cors = require("cors")
+// const cors = require("cors")
+import cors from "cors";
+// const dotenv = require("dotenv")
+import dotenv from "dotenv"
+
 const cookieParser = require('cookie-parser');
-const dotenv = require("dotenv")
 dotenv.config()
 
 const port = process.env.PORT_VALUE || 4200
@@ -19,16 +23,16 @@ app.use("/uploads", express.static("uploads")); // Backend folder ki image ko ur
 
 // Testing End Point 
 app.get("/", (req, res)=>{
-   res.send("My-Portfolio server running successfylly")
+   res.send("Infinex Site server running successfully")
 })
 
 
 // Router for Admin API's 
-const AdminRouter = require("./Router/AdminRouter")
+import AdminRouter from "./Router/AdminRouter"
 app.use('/admin', AdminRouter)
 
 // Router for User API's 
-const UserRouter = require("./Router/UserRouter")
+import UserRouter from "./Router/UserRouter"
 app.use('/user', UserRouter)
 
 
