@@ -1,12 +1,14 @@
 // const express = require("express")
+// const cors = require("cors")
+// const dotenv = require("dotenv")
+// const cookieParser = require('cookie-parser');
+
 import express from "express";
 const app = express()
-// const cors = require("cors")
 import cors from "cors";
-// const dotenv = require("dotenv")
 import dotenv from "dotenv"
+import cookieParser from 'cookie-parser'
 
-const cookieParser = require('cookie-parser');
 dotenv.config()
 
 const port = process.env.PORT_VALUE || 4200
@@ -28,11 +30,11 @@ app.get("/", (req, res)=>{
 
 
 // Router for Admin API's 
-import AdminRouter from "./Router/AdminRouter"
+import AdminRouter from "./Router/AdminRouter.js"
 app.use('/admin', AdminRouter)
 
 // Router for User API's 
-import UserRouter from "./Router/UserRouter"
+import UserRouter from "./Router/UserRouter.js"
 app.use('/user', UserRouter)
 
 
