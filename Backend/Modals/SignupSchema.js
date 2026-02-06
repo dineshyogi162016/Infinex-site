@@ -1,5 +1,5 @@
 require("../Connection")
-const { type } = require("@testing-library/user-event/dist/type")
+// const { type } = require("@testing-library/user-event/dist/type")
 const mongoose = require("mongoose")
 
 const SignupSchema = new mongoose.Schema({
