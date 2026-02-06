@@ -17,7 +17,8 @@ app.use(express.json())
 app.use(cookieParser());
 
 app.use(cors({
-    origin: 'http://localhost:3000', // your frontend origin
+    // origin: 'http://localhost:3000', // your frontend origin
+    origin: 'https://infinex-site.vercel.app', // your frontend origin
     credentials: true                // allow sending cookies
   }));
 app.use("/uploads", express.static("uploads")); // Backend folder ki image ko url ke throw frontend me show karwane ke liye 
