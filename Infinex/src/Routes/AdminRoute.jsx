@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { MdDashboard, MdPermContactCalendar } from 'react-icons/md';
 import { FaFileAlt, FaUser } from 'react-icons/fa';
 import { IoMdSettings } from 'react-icons/io';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../Utilities/ContextAPI/AuthProvider';
 import { RiMenuAddFill, RiTeamFill } from 'react-icons/ri';
 import { TbListDetails } from 'react-icons/tb';
@@ -14,11 +14,13 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 const AdminRoute = (props) => {
   const {Component} = props;
-    const {checkLogin, logOut} = useAuth()
+    const {isLogin, loading, logoutSuccess, logOut} = useAuth()
     let navigate = useNavigate()
+
 
     const handleLogOut = () => {
         logOut()
+        logoutSuccess()
         navigate("/login")
     }
     
@@ -29,23 +31,38 @@ const AdminRoute = (props) => {
     
     // }
 
-    const LoginOrNot = async() =>{
-        const response = await axios.get(`${REACT_APP_API_URL}/admin/checklogin`, {withCredentials: true})
-        if(!response.data.success){
-            navigate("/login")
-        }
+
+    if (loading) return null;
+
+    if (!isLogin) {
+        return <Navigate to="/login" replace />;
     }
+    // loginSuccess()
+    
+    // useEffect(() => {
+    //     // const loginData = JSON.parse(localStorage.getItem("InfinexAdminLogin"))
+    //     // const LoginToken = getCookie("InfinexToken")
 
-    useEffect(() => {
-        // const loginData = JSON.parse(localStorage.getItem("InfinexAdminLogin"))
-        // const LoginToken = getCookie("InfinexToken")
+    //     // if(!LoginToken){
+    //     //     navigate("/login")
+    //     // }
 
-        // if(!LoginToken){
-        //     navigate("/login")
-        // }
 
-        LoginOrNot()
-    },[])
+    //     const checkAuth = async () => {
+    //         try {
+    //             const response = await axios.get(`${REACT_APP_API_URL}/admin/checklogin`, { withCredentials: true });
+    //             if (!response.data.success) {
+    //                 navigate("/login");
+    //             }
+    //         } catch (error) {
+    //             navigate("/login");
+    //         }
+    //     };
+
+    //     checkAuth();
+
+    // },[navigate])
+
   return (
     <div className="admin-dashboard" >
 

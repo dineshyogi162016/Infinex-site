@@ -7,7 +7,7 @@ import axios from 'axios';
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 const Login = () => {
-    const {checkLogin} = useAuth()
+    // const {checkLogin} = useAuth()
     const navigate = useNavigate()
     
     const [LoginData, setLoginData] = useState({
@@ -124,7 +124,7 @@ const Login = () => {
      }
 
     useEffect(() => {
-        checkLogin();
+        // checkLogin();
 
         const RememberMeData = JSON.parse(localStorage.getItem("RememberMe"))
         if(RememberMeData){

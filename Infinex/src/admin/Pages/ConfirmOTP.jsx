@@ -1,12 +1,15 @@
 import React, {useEffect, useState } from 'react'
+import { useAuth } from "../../Utilities/ContextAPI/AuthProvider";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const REACT_APP_API_URL = process.env.REACT_APP_API_URL
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
 const ConfirmOTP = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     
+    const {loginSuccess} = useAuth();
+
     const [otp_code, setotp_code] = useState({
         myotp_code : ""
     })
@@ -25,6 +28,8 @@ const ConfirmOTP = () => {
                 const response = await axios.post(`${REACT_APP_API_URL}/admin/login`, otp_code , { withCredentials: true });
                 if(response.data.success){
                     alert(response.data.message)
+                    
+                    loginSuccess();
                     navigate("/dashboard")
                     // localStorage.setItem("LoginUserData", JSON.stringify(otp_code.LoginData))
 

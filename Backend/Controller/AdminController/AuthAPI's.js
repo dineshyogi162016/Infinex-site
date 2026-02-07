@@ -310,14 +310,15 @@ const Login = async (req, res) => {
         }else{
                
             const payload = {email : userEmail}
-            const jwtToken = jwt.sign(payload, secretKey, {expiresIn :  30 * 60})
+            // const jwtToken = jwt.sign(payload, secretKey, {expiresIn :  30 * 60}) // with expiry time
+            const jwtToken = jwt.sign(payload, secretKey )
 
             res.cookie("InfinexToken", jwtToken,{
                 httpOnly : true,
                 secure : false,
                 sameSite: "Lax", // Prevent CSRF,
-                path: "/",
-                maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+                path: "/"
+                // maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
             }).json({
                 status : 201,
                 success : true,
@@ -348,11 +349,10 @@ const CheckLogin = async (req, res) => {
     const Token = req.cookies.InfinexToken;
 
     if(!Token){
-        res.json({
-            status : 401,
-            success : false,
-            message : "Logged out"
-        })
+        res.status(401).json({
+            success: false,
+            message: "Logged out"
+        });
     }
     else{
         jwt.verify(Token, secretKey, (err, valid) =>{
@@ -364,17 +364,15 @@ const CheckLogin = async (req, res) => {
                     path: "/"
                 });
 
-                res.json({
-                    status : 401,
-                    success : false,
-                    message : "Token Expired"
-                })
+                res.status(401).json({
+                    success: false,
+                    message: "Logged out"
+                });
             }else{
-                res.json({
-                    status : 200,
-                    success : true,
-                    message : "Logged in"
-                })
+                res.status(200).json({
+                    success: true,
+                    message: "Logged in"
+                });
             }
         })
     }
