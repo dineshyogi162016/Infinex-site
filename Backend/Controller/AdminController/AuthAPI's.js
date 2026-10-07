@@ -117,110 +117,272 @@ const SendOTP = async (req, res) => {
                         to : userEmail,
                         subject : 'OTP for Secure Login',
                         html : `<table
+                                    role="presentation"
                                     border="0"
                                     cellpadding="0"
                                     cellspacing="0"
                                     width="100%"
-                                    style="font-family: Arial, sans-serif; background-color: #f4f4f4;"
+                                    style="
+                                        width: 100%;
+                                        margin: 0;
+                                        padding: 0;
+                                        background-color: #f5f7fa;
+                                        font-family: Arial, Helvetica, sans-serif;
+                                    "
                                     >
                                     <tr>
-                                        <td align="center" style="padding: 20px 0 30px 0;">
+                                        <td align="center" style="padding: 32px 16px;">
+                                        
+                                        <!-- Main Container -->
                                         <table
+                                            role="presentation"
                                             border="0"
                                             cellpadding="0"
                                             cellspacing="0"
-                                            width="600"
-                                            style="border: 1px solid #cccccc; border-radius: 8px; background-color: #ffffff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);"
+                                            width="100%"
+                                            style="
+                                            width: 100%;
+                                            max-width: 560px;
+                                            background-color: #ffffff;
+                                            border: 1px solid #e6e9ee;
+                                            border-radius: 12px;
+                                            "
                                         >
+
+                                            <!-- Brand -->
                                             <tr>
                                             <td
                                                 align="center"
-                                                style="padding: 30px 30px 20px 30px; border-bottom: 1px solid #eeeeee;"
+                                                style="
+                                                padding: 28px 32px 18px 32px;
+                                                border-bottom: 1px solid #eef0f3;
+                                                "
                                             >
-                                                <h1 style="margin: 0; font-size: 24px; color: #333333;">
-                                                One-Time Password (OTP)
-                                                </h1>
+                                                <p
+                                                style="
+                                                    margin: 0;
+                                                    font-size: 18px;
+                                                    line-height: 24px;
+                                                    font-weight: 700;
+                                                    color: #111827;
+                                                "
+                                                >
+                                                Infinex Technologies
+                                                </p>
                                             </td>
                                             </tr>
 
+                                            <!-- Main Content -->
                                             <tr>
-                                            <td
-                                                style="padding: 30px 30px 40px 30px; color: #555555; font-size: 16px; line-height: 1.6;"
-                                            >
-                                                <p style="margin: 0 0 20px 0;">
-                                                Hi ${UserExist.name},
+                                            <td style="padding: 32px;">
+
+                                                <!-- Title -->
+                                                <h1
+                                                style="
+                                                    margin: 0 0 10px 0;
+                                                    font-size: 24px;
+                                                    line-height: 32px;
+                                                    font-weight: 700;
+                                                    text-align: center;
+                                                    color: #111827;
+                                                "
+                                                >
+                                                Verify your login
+                                                </h1>
+
+                                                <p
+                                                style="
+                                                    margin: 0 0 28px 0;
+                                                    font-size: 15px;
+                                                    line-height: 24px;
+                                                    text-align: center;
+                                                    color: #6b7280;
+                                                "
+                                                >
+                                                Hi ${UserExist.name}, use the verification code below to securely
+                                                continue your login.
                                                 </p>
 
-                                                <p style="margin: 0 0 20px 0;">
-                                                Your One-Time Password (OTP) for logging in is:
-                                                </p>
-
+                                                <!-- OTP Box -->
                                                 <table
+                                                role="presentation"
                                                 border="0"
                                                 cellpadding="0"
                                                 cellspacing="0"
                                                 width="100%"
-                                                style="margin-bottom: 30px;"
+                                                style="margin: 0 0 16px 0;"
                                                 >
                                                 <tr>
                                                     <td align="center">
-                                                    <div
-                                                        style="display: inline-block; padding: 15px 30px; background-color: #f0f8ff; border: 2px solid #007bff; border-radius: 6px;"
+                                                    
+                                                    <table
+                                                        role="presentation"
+                                                        border="0"
+                                                        cellpadding="0"
+                                                        cellspacing="0"
+                                                        style="
+                                                        background-color: #f3f7ff;
+                                                        border: 1px solid #d9e5ff;
+                                                        border-radius: 10px;
+                                                        "
                                                     >
-                                                        <span
-                                                        style="font-size: 32px; font-weight: bold; color: #007bff; letter-spacing: 5px;"
+                                                        <tr>
+                                                        <td
+                                                            align="center"
+                                                            style="
+                                                            padding: 18px 30px;
+                                                            font-size: 32px;
+                                                            line-height: 40px;
+                                                            font-weight: 700;
+                                                            letter-spacing: 8px;
+                                                            color: #2563eb;
+                                                            white-space: nowrap;
+                                                            "
                                                         >
-                                                        &#128272; [  ${OTP}  ]
-                                                        </span>
-                                                    </div>
+                                                            ${OTP}
+                                                        </td>
+                                                        </tr>
+                                                    </table>
+
                                                     </td>
                                                 </tr>
                                                 </table>
 
-                                                <p style="margin: 0 0 15px 0; text-align: center; color: #666666;">
-                                                This code will expire in **[X] minutes**.
+                                                <!-- Expiry -->
+                                                <p
+                                                style="
+                                                    margin: 0 0 26px 0;
+                                                    font-size: 13px;
+                                                    line-height: 20px;
+                                                    text-align: center;
+                                                    color: #6b7280;
+                                                "
+                                                >
+                                                This verification code expires in
+                                                <strong style="color: #374151;">[X] minutes</strong>.
                                                 </p>
 
-                                                <p style="margin: 0 0 30px 0; font-weight: bold; color: #cc0000;">
-                                                For your security, please **do not share this code with anyone**.
+                                                <!-- Security Notice -->
+                                                <table
+                                                role="presentation"
+                                                border="0"
+                                                cellpadding="0"
+                                                cellspacing="0"
+                                                width="100%"
+                                                style="
+                                                    width: 100%;
+                                                    margin-bottom: 24px;
+                                                    background-color: #fff8eb;
+                                                    border: 1px solid #fde5b4;
+                                                    border-radius: 8px;
+                                                "
+                                                >
+                                                <tr>
+                                                    <td
+                                                    style="
+                                                        padding: 14px 16px;
+                                                        font-size: 13px;
+                                                        line-height: 20px;
+                                                        color: #7a5517;
+                                                    "
+                                                    >
+                                                    <strong>Security reminder:</strong>
+                                                    Never share this verification code with anyone.
+                                                    </td>
+                                                </tr>
+                                                </table>
+
+                                                <!-- Ignore Message -->
+                                                <p
+                                                style="
+                                                    margin: 0;
+                                                    font-size: 14px;
+                                                    line-height: 22px;
+                                                    text-align: center;
+                                                    color: #6b7280;
+                                                "
+                                                >
+                                                Didn't request this login? You can safely ignore this email.
                                                 </p>
 
-                                                <p style="margin: 0 0 20px 0;">
-                                                If you did not request this login, please ignore this email or
-                                                contact our support team immediately.
-                                                </p>
                                             </td>
                                             </tr>
 
+                                            <!-- Footer -->
                                             <tr>
                                             <td
                                                 align="center"
-                                                style="padding: 20px 30px 30px 30px; background-color: #f9f9f9; border-top: 1px solid #eeeeee; border-radius: 0 0 8px 8px;"
+                                                style="
+                                                padding: 22px 24px;
+                                                background-color: #fafbfc;
+                                                border-top: 1px solid #eef0f3;
+                                                border-radius: 0 0 12px 12px;
+                                                "
                                             >
-                                                <p style="margin: 0 0 10px 0; font-size: 14px; color: #999999;">
-                                                Stay secure,
-                                                </p>
-                                                <p style="margin: 0 0 5px 0; font-size: 16px; font-weight: bold; color: #333333;">
-                                                [InfinexTechnologies]
-                                                </p>
-                                                <p style="margin: 0; font-size: 14px; color: #007bff;">
-                                                <a
-                                                    href="mailto:[Support Email]"
-                                                    style="color: #007bff; text-decoration: none;"
-                                                    >[ info@infinextechnologies.com ]</a
+                                                <p
+                                                style="
+                                                    margin: 0 0 6px 0;
+                                                    font-size: 13px;
+                                                    line-height: 20px;
+                                                    font-weight: 600;
+                                                    color: #374151;
+                                                "
                                                 >
-                                                |
-                                                <a
-                                                    href="tel:[+918955100493 ]"
-                                                    style="color: #007bff; text-decoration: none;"
-                                                    >[ +918955100493 ]</a
+                                                Infinex Technologies
+                                                </p>
+
+                                                <p
+                                                style="
+                                                    margin: 0;
+                                                    font-size: 12px;
+                                                    line-height: 20px;
+                                                    color: #9ca3af;
+                                                "
                                                 >
+                                                <a
+                                                    href="mailto:info@infinextechnologies.com"
+                                                    style="
+                                                    color: #2563eb;
+                                                    text-decoration: none;
+                                                    "
+                                                >
+                                                    info@infinextechnologies.com
+                                                </a>
+
+                                                &nbsp;&nbsp;•&nbsp;&nbsp;
+
+                                                <a
+                                                    href="tel:+918955100493"
+                                                    style="
+                                                    color: #2563eb;
+                                                    text-decoration: none;
+                                                    "
+                                                >
+                                                    +91 89551 00493
+                                                </a>
                                                 </p>
                                             </td>
                                             </tr>
+
                                         </table>
+
+                                        <!-- Bottom Note -->
+                                        <p
+                                            style="
+                                            max-width: 520px;
+                                            margin: 16px auto 0 auto;
+                                            font-size: 11px;
+                                            line-height: 18px;
+                                            text-align: center;
+                                            color: #9ca3af;
+                                            "
+                                        >
+                                            This is an automated security email. Please do not reply directly to
+                                            this message.
+                                        </p>
+
                                         </td>
-                                </tr>
+                                    </tr>
                                 </table>`
                     }
 
