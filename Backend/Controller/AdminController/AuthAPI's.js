@@ -107,6 +107,10 @@ const SendOTP = async (req, res) => {
                         auth : {
                             user : senderMail,
                             pass : senderMailPass
+                        },
+
+                        tls: {
+                            rejectUnauthorized: false
                         }
                     })
 
