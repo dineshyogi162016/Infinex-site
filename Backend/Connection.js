@@ -1,3 +1,16 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-mongoose.connect("mongodb://127.0.0.1:27017/Infinex")
+const DATABASE_URI = process.env.DATABASE_URI;
+
+if (!DATABASE_URI) {
+  throw new Error("DATABASE_URI is not defined. Check your .env file.");
+}
+
+mongoose
+  .connect(DATABASE_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => {
+    console.error("MongoDB connection error:", err.message);
+    process.exit(1);
+  });
