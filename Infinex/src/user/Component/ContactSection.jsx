@@ -18,6 +18,7 @@ const ContactSection = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const [ContactsData, setContactsData] = useState({})
+  const companyData = ContactsData || {};
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -95,33 +96,33 @@ const ContactSection = () => {
     {
       icon: MapPin,
       title: 'Address',
-      content: ContactsData.address ? ContactsData.address : 'Gali No. 5, opp. Durgapura Railway Station, Jadon Nagar-A, Nalanda Vihar, Durgapura, Jaipur, Rajasthan 302018',
+      content: companyData.address || 'Gali No. 5, opp. Durgapura Railway Station, Jadon Nagar-A, Nalanda Vihar, Durgapura, Jaipur, Rajasthan 302018',
       link: 'https://maps.google.com?q=Infinex+Technologies+Jaipur',
       external: true
     },
     {
       icon: Phone,
       title: 'Phone',
-      content: (ContactsData.contact || '+91 89551 00493'),
-      link: `tel:${ContactsData.contact || '+918955100493'}`
+      content: companyData.contact || '+91 89551 00493',
+      link: `tel:${companyData.contact || '+918955100493'}`
     },
     {
       icon: Mail,
       title: 'Email',
-      content: (ContactsData.email || 'info@infinextechnologies.com'),
-      link: `mailto:${ContactsData.email || 'info@infinextechnologies.com'}`
+      content: companyData.email || 'info@infinextechnologies.com',
+      link: `mailto:${companyData.email || 'info@infinextechnologies.com'}`
     },
     {
       icon: Clock,
       title: 'Open Hours',
-      content: ContactsData.OpenHour || 'Mon - Sat, 10:00 AM - 7:00 PM'
+      content: companyData.OpenHour || 'Mon - Sat, 10:00 AM - 7:00 PM'
     }
   ];
 
   const GetCompanyContacts = async () => {
       try {
-          const APICompanyData = await axios.get(`${REACT_APP_API_URL}/admin/managecontact/getCompanyData`)    
-          setContactsData(APICompanyData.data.response[0])
+          const APICompanyData = await axios.get(`${REACT_APP_API_URL}/admin/managecontact/getCompanyData`)
+          setContactsData(APICompanyData?.data?.response?.[0] || {})
 
       } catch (error) {
           console.log("Error in Get Member's API")

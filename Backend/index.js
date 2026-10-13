@@ -6,8 +6,8 @@
 import express from "express";
 const app = express()
 import cors from "cors";
-import dotenv from "dotenv"
-import cookieParser from 'cookie-parser'
+import dotenv from "dotenv";
+import cookieParser from 'cookie-parser';
 
 dotenv.config()
 
@@ -37,6 +37,7 @@ app.use('/admin', AdminRouter)
 // Router for User API's 
 import UserRouter from "./Router/UserRouter.js"
 app.use('/user', UserRouter)
+
 
 
 

@@ -17,6 +17,7 @@ const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [ContactsData, setContactsData] = useState({})
+  const companyData = ContactsData || {};
 
   const [formError, setformError] = useState({});
   const emailRegex = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
@@ -100,8 +101,8 @@ const ContactSection = () => {
 
    const GetCompanyContacts = async () => {
       try {
-          const APICompanyData = await axios.get(`${REACT_APP_API_URL}/admin/managecontact/getCompanyData`)    
-          setContactsData(APICompanyData.data.response[0])
+          const APICompanyData = await axios.get(`${REACT_APP_API_URL}/admin/managecontact/getCompanyData`)
+          setContactsData(APICompanyData?.data?.response?.[0] || {})
 
       } catch (error) {
           console.log("Error in Get Member's API")
@@ -131,22 +132,22 @@ const ContactSection = () => {
         <div className="info-box" data-aos="fade-up" data-aos-delay="100">
           <i className="bi bi-geo-alt"></i>
           <h4>Address</h4>
-          <p>{ContactsData.address || "Gali No. 5, opp. Durgapura Railway Station, Jadon Nagar-A, Nalanda Vihar, Durgapura, Jaipur, Rajasthan 302018"}  </p>
+          <p>{companyData.address || "Gali No. 5, opp. Durgapura Railway Station, Jadon Nagar-A, Nalanda Vihar, Durgapura, Jaipur, Rajasthan 302018"}  </p>
         </div>
         <div className="info-box" data-aos="fade-up" data-aos-delay="200">
           <i className="bi bi-telephone"></i>
           <h4>Phone</h4>
-          <Link to={`tel:${ContactsData.contact || '+918955100493'}`}>{ContactsData.contact || '+91 89551 00493'}</Link>
+          <Link to={`tel:${companyData.contact || '+918955100493'}`}>{companyData.contact || '+91 89551 00493'}</Link>
         </div>
         <div className="info-box" data-aos="fade-up" data-aos-delay="300">
           <i className="bi bi-envelope"></i>
           <h4>Email</h4>
-          <Link to={`mailto:${ContactsData.email || 'info@infinextechnologies.com'}`}>{ContactsData.email || 'info@infinextechnologies.com'}</Link>
+          <Link to={`mailto:${companyData.email || 'info@infinextechnologies.com'}`}>{companyData.email || 'info@infinextechnologies.com'}</Link>
         </div>
         <div className="info-box" data-aos="fade-up" data-aos-delay="400">
           <i className="bi bi-clock"></i>
           <h4>Open Hours</h4>
-          <p>{ContactsData.OpenHour || 'Mon - Sat, 10:00 AM - 7:00 PM'}</p>
+          <p>{companyData.OpenHour || 'Mon - Sat, 10:00 AM - 7:00 PM'}</p>
         </div>
       </div>
 

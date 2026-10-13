@@ -8,7 +8,7 @@ if (!DATABASE_URI) {
 }
 
 mongoose
-  .connect(DATABASE_URI)
+  .connect(DATABASE_URI, { dbName: "Infinex" })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => {
     console.error("MongoDB connection error:", err.message);

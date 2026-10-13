@@ -15,7 +15,7 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 const ManageContact = () => {
 
 
-    const [ContactsData, setContactsData] = useState({
+    const defaultContactData = {
         email : "",
         contact : "",
         address : "",
@@ -27,7 +27,9 @@ const ManageContact = () => {
             Linkedin : "",
             GitHub : ""
         }
-    })
+    }
+
+    const [ContactsData, setContactsData] = useState(defaultContactData)
     
     const [ContactUsAllData, setContactUsAllData] = useState([])
     const [ShowMessage, setShowMessage] = useState({})
@@ -169,8 +171,8 @@ const ManageContact = () => {
     // Company Contact Data Functions
     const GetCompanyContacts = async () => {
         try {
-            const APICompanyData = await axios.get(`${REACT_APP_API_URL}/admin/managecontact/getCompanyData`)    
-            setContactsData(APICompanyData.data.response[0])
+            const APICompanyData = await axios.get(`${REACT_APP_API_URL}/admin/managecontact/getCompanyData`)
+            setContactsData(APICompanyData?.data?.response?.[0] || defaultContactData)
 
         } catch (error) {
             console.log("Error in Get Member's API")

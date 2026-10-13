@@ -12,60 +12,71 @@ const jwt = require("jsonwebtoken");
 const OTPSchema = require("../../Modals/OTPSchema");
 
 const Signup = async (req, res) => {
-    try{
-        const registerUsers = await SignupSchema.find() ;
-        let SignupInstance = req.body ;
-        
-        
-        let userName = SignupInstance.name
-        let userEmail = SignupInstance.email
-        let userPassword = SignupInstance.password 
-        
-        const userExist = registerUsers.find(e => e.email === userEmail)
+    try {
+        const signupInstance = req.body || {};
+        const userName = String(signupInstance.name || '').trim();
+        const userEmail = String(signupInstance.email || '').trim().toLowerCase();
+        const userPassword = String(signupInstance.password || '');
 
-        if(userExist){
-            res.json({
-                status : 409,
+        if (!userName || !userEmail || !userPassword) {
+            return res.status(400).json({
+                status: 400,
+                success: false,
+                message: "Name, email and password are required"
+            });
+        }
+
+        const userExist = await SignupSchema.findOne({ email: userEmail });
+
+        if (userExist) {
+            return res.status(409).json({
+                status: 409,
                 success: false,
                 message: "User already exist"
-            })
-        }else{
-            const hashPassword = await bcrypt.hash(userPassword, saltRound )
-            
-            SignupInstance = {
-                name : userName,
-                email : userEmail,
-                password : hashPassword,
-                role : "editor",
-                status : false
-            }
-            
-            const sigupDetails = SignupSchema(SignupInstance)
-            const response = await sigupDetails.save()
+            });
+        }
 
-            if(response){  
-               res.json({
-                status : 201,
+        const hashPassword = await bcrypt.hash(userPassword, saltRound);
+
+        const newUser = {
+            name: userName,
+            email: userEmail,
+            password: hashPassword,
+            role: "editor",
+            status: false
+        };
+
+        const response = await SignupSchema.create(newUser);
+
+        if (response) {
+            return res.status(201).json({
+                status: 201,
                 success: true,
                 message: "User registered successfully"
-               })
-            }else{
-                res.json({
-                    status : 500,
-                    success: false,
-                    message: "Registered failed"
-                })
-            }
+            });
         }
-    }catch(error){
-        res.json({
-            status : 500,
-            success : false,
-            message : "Something went wrong"
-        })
-    }
 
-    
+        return res.status(500).json({
+            status: 500,
+            success: false,
+            message: "Registration failed"
+        });
+    } catch (error) {
+        if (error?.code === 11000) {
+            return res.status(409).json({
+                status: 409,
+                success: false,
+                message: "User already exist"
+            });
+        }
+
+        console.error("Signup error:", error);
+        return res.status(500).json({
+            status: 500,
+            success: false,
+            message: "Something went wrong"
+        });
+    }
 }
 
 const SendOTP = async (req, res) => {

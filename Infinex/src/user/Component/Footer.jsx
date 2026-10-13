@@ -16,12 +16,13 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 
 const Footer = () => {
-  const [ContactsData, setContactsData] = useState({})
+  const [ContactsData, setContactsData] = useState({ SocialMedia: {} })
+  const companyData = ContactsData || { SocialMedia: {} }
 
   const GetCompanyContacts = async () => {
       try {
-          const APICompanyData = await axios.get(`${REACT_APP_API_URL}/admin/managecontact/getCompanyData`)    
-          setContactsData(APICompanyData.data.response[0])
+          const APICompanyData = await axios.get(`${REACT_APP_API_URL}/admin/managecontact/getCompanyData`)
+          setContactsData(APICompanyData?.data?.response?.[0] || { SocialMedia: {} })
 
       } catch (error) {
           console.log("Error in Get Member's API")
@@ -39,21 +40,21 @@ const Footer = () => {
           <div className="icon-box animate-icon"><FaPhoneAlt /></div>
           <div className="footer-contact-info">
             <p>Quick Call Us:</p>
-            <strong>{ContactsData.contact || "+91 89551 00493"}</strong>
+            <strong>{companyData.contact || "+91 89551 00493"}</strong>
           </div>
         </div>
         <div className="footer-contact-item">
           <div className="icon-box animate-icon"><FaEnvelope /></div>
           <div className="footer-contact-info">
             <p>Mail Us On:</p>
-            <strong>{ContactsData.email || "info@infinextechnologies.com"}</strong>
+            <strong>{companyData.email || "info@infinextechnologies.com"}</strong>
           </div>
         </div>
         <div className="footer-contact-item">
           <div className="icon-box animate-icon"><FaMapMarkerAlt /></div>
           <div className="footer-contact-info">
             <p>Visit Location:</p>
-            <strong>{ContactsData.address || "Gali No. 5, opp. Durgapura Railway Station, Jadon Nagar-A, Nalanda Vihar, Durgapura, Jaipur, Rajasthan 302018"}</strong>
+            <strong>{companyData.address || "Gali No. 5, opp. Durgapura Railway Station, Jadon Nagar-A, Nalanda Vihar, Durgapura, Jaipur, Rajasthan 302018"}</strong>
           </div>
         </div>
       </div>
@@ -72,13 +73,13 @@ const Footer = () => {
             </p>
 
 			<div style={{ fontSize: "30px", color: "#7f5eff", display: "flex", gap: "10px" }} className="footer-social-icons animate-icon">
- <a href={ContactsData?.SocialMedia?.Facebook || "https://www.facebook.com/share/16JQd7VX4T/"} target="_blank" rel="noopener noreferrer">
+ <a href={companyData?.SocialMedia?.Facebook || "https://www.facebook.com/share/16JQd7VX4T/"} target="_blank" rel="noopener noreferrer">
   <FaFacebookF />
 </a>
-<a href={ContactsData?.SocialMedia?.Instagram || "https://www.instagram.com/infinextechnologies?igsh=ZGRyaHBuaG1kNGRi"} target="_blank" rel="noopener noreferrer">
+<a href={companyData?.SocialMedia?.Instagram || "https://www.instagram.com/infinextechnologies?igsh=ZGRyaHBuaG1kNGRi"} target="_blank" rel="noopener noreferrer">
   <FaInstagram />
 </a>
-<a href={ContactsData?.SocialMedia?.Linkedin || "https://www.linkedin.com/company/infinextechnologies/"} target="_blank" rel="noopener noreferrer">
+<a href={companyData?.SocialMedia?.Linkedin || "https://www.linkedin.com/company/infinextechnologies/"} target="_blank" rel="noopener noreferrer">
   <FaLinkedinIn />
 </a>
 <a href="https://wa.me/918955100493" target="_blank" rel="noopener noreferrer">
@@ -126,7 +127,7 @@ const Footer = () => {
 <div className="home-map-container">
   <iframe
     title="company-map"
-    src= {ContactsData.LocationMap || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2044.3998074992833!2d75.78143261150228!3d26.855633696564876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db55207e7f787%3A0x30c6caefe3401b6d!2sInfinex%20Technologies%20Pvt.%20Ltd%20%7C%20Jaipur!5e0!3m2!1sen!2sin!4v1752239080364!5m2!1sen!2sin"}
+    src= {companyData.LocationMap || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2044.3998074992833!2d75.78143261150228!3d26.855633696564876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db55207e7f787%3A0x30c6caefe3401b6d!2sInfinex%20Technologies%20Pvt.%20Ltd%20%7C%20Jaipur!5e0!3m2!1sen!2sin!4v1752239080364!5m2!1sen!2sin"}
     width="100%"
     height="150"
     frameBorder="0"

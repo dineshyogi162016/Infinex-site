@@ -114,7 +114,7 @@ const Mainpage = () => {
 
         {/* Login Routes  */}
         <Route path={"/login"} element={<LoginRoute Component={Login} />} />
-        {/* <Route path="/signup" element={<LoginRoute Component={Sinup} /> } /> */}
+        <Route path="/signup" element={<LoginRoute Component={Sinup} /> } />
         <Route path="/forgotpassword" element={<LoginRoute Component={ForgotPassword} /> } />
         <Route path="/confirmOTP" element={<LoginRoute Component={ConfirmOTP} /> } />
         <Route path="/ResetPassword" element={<LoginRoute Component={ResetPassword} /> } />
