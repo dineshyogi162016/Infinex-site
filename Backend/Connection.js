@@ -2,15 +2,30 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const DATABASE_URI = process.env.DATABASE_URI;
+const DB_NAME = process.env.DB_NAME;
 
-if (!DATABASE_URI) {
-  throw new Error("DATABASE_URI is not defined. Check your .env file.");
-}
+let connectionPromise;
 
-mongoose
-  .connect(DATABASE_URI, { dbName: "Infinex" })
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => {
-    console.error("MongoDB connection error:", err.message);
-    process.exit(1);
-  });
+const connectDatabase = () => {
+  if (!DATABASE_URI) {
+    return Promise.reject(new Error("DATABASE_URI is not defined. Check your environment variables."));
+  }
+
+  if (mongoose.connection.readyState === 1) {
+    return Promise.resolve();
+  }
+
+  if (!connectionPromise) {
+    connectionPromise = mongoose
+      .connect(DATABASE_URI, { dbName: `${DB_NAME}` })
+      .then(() => console.log("MongoDB connected"))
+      .catch((error) => {
+        connectionPromise = undefined;
+        throw error;
+      });
+  }
+
+  return connectionPromise;
+};
+
+module.exports = connectDatabase;

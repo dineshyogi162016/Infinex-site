@@ -8,19 +8,31 @@ const app = express()
 import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from 'cookie-parser';
+import connectDatabase from "./Connection.js";
 
 dotenv.config()
 
-const port = process.env.PORT_VALUE || 4200
+const port = process.env.PORT || process.env.PORT_VALUE || 4200
+
+const allowedOrigins = (process.env.CORS_ORIGIN || '')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean)
 
 app.use(express.json())
 app.use(cookieParser());
 
 app.use(cors({
-  // origin: 'https://infinex-site.vercel.app', // frontend origin for Live  
-  origin: process.env.CORS_ORIGIN, // your frontend origin For Local
-    credentials: true                // allow sending cookies
-  }));
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true)
+      return
+    }
+
+    callback(null, false)
+  },
+  credentials: true
+}));
 app.use("/uploads", express.static("uploads")); // Backend folder ki image ko url ke throw frontend me show karwane ke liye 
 
 
@@ -28,6 +40,20 @@ app.use("/uploads", express.static("uploads")); // Backend folder ki image ko ur
 app.get("/", (req, res)=>{
    res.send("Infinex Site server running successfully")
 })
+
+app.use(async (req, res, next) => {
+  try {
+    await connectDatabase();
+    next();
+  } catch (error) {
+    console.error("Database connection error:", error.message);
+    res.status(503).json({
+      status: 503,
+      success: false,
+      message: "Database unavailable"
+    });
+  }
+});
 
 
 // Router for Admin API's 
@@ -41,8 +67,10 @@ app.use('/user', UserRouter)
 
 
 
-app.listen(port, ()=>{
+if (!process.env.VERCEL) {
+  app.listen(port, () => {
     console.log(`Server is running on port http://localhost:${port}`)
-})
+  })
+}
 
 export default app;
