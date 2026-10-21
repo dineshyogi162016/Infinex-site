@@ -33,7 +33,8 @@ app.use(cors({
   },
   credentials: true
 }));
-app.use("/uploads", express.static("uploads")); // Backend folder ki image ko url ke throw frontend me show karwane ke liye 
+app.use("/uploads", express.static("Uploads"));
+app.use("/Uploads", express.static("Uploads"));
 
 
 // Testing End Point 

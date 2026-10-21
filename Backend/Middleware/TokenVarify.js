@@ -19,10 +19,11 @@ const TokenVarify = (req, res, next) => {
     else{
         jwt.verify(Token, secretKey, (err, valid) =>{
             if(err){
+                const isProduction = process.env.NODE_ENV === "production" || !!process.env.VERCEL;
                 res.clearCookie("InfinexToken", {
                     httpOnly: true,
-                    sameSite: "Lax",
-                    secure: false,
+                    sameSite: isProduction ? "none" : "lax",
+                    secure: isProduction,
                     path: "/"
                 });
                 
